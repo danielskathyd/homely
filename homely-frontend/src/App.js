@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
@@ -6,6 +7,9 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Todo from "./components/Todo";
 import SplitButton from "./components/SplitButton";
+import { Register } from "./components/Accounts/Register"
+import { Login } from "./components/Accounts/Login"
+import { LoginButton } from "./components/LoginButton"
 
 const Container = styled("div")`
   margin: auto;
@@ -60,6 +64,14 @@ class App extends React.Component {
       : "";
     return (
       <Container>
+        <Router>
+          <Switch>
+            <Route expact path="/register" component={Register}/>
+            <Route expact path="/login" component={Login}/>
+          </Switch>
+          <LoginButton/>
+        </Router>
+        
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Header>homely</Header>

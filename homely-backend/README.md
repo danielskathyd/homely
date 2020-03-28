@@ -67,7 +67,33 @@ Access admin interface at http://localhost:8000/admin::
 python manage.py createsuperuser
 ```
 
-Manage user APIs at http://localhost:8000/api/users.
-Manage todo APIs at http://localhost:8000/api/todos.
-
 `homely-backend/backend/homely` contains the pertinent django models and files.
+
+Here is a list of routes:
+User APIs: http://localhost:8000/api/users
+Todo APIs: http://localhost:8000/api/todos
+
+Register: http://localhost:8000/api/register
+{
+	"username": "",
+	"email": "",
+	"first_name": "",
+	"last_name": "",
+	"password": ""
+}
+
+Login: http://localhost:8000/api/auth/login
+{
+  "username" : "",
+  "password" : ""
+}
+Login returns a token that is used to for User API:
+
+User API by Token: http://localhost:8000/api/auth/user
+Header:
+{
+  "Authorization" : "Token <INSERT TOKEN HERE>"
+}
+
+Logout: http://localhost:8000/api/auth/logout
+(This invalidates the token)
