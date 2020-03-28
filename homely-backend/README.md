@@ -46,6 +46,21 @@ pipenv install django
 ```
 
 Install djangorestframework and django-cors-headers:
+
 ```
 pipenv install djangorestframework django-cors-headers
 ```
+
+Run Server:
+
+```
+python manage.py runserver
+```
+
+Access admin interface at http://localhost:8000/admin::
+
+```
+python manage.py createsuperuser
+```
+
+Manage todo APIs at http://localhost:8000/api/todos.
