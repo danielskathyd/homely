@@ -3,7 +3,6 @@ import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
 import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Todo from "./components/Todo";
@@ -13,6 +12,15 @@ const Container = styled("div")`
   justify-content: center;
   text-align: center;
 `;
+
+const Header = styled("div")`
+  padding: 20px;
+  text-align: left;
+  background: #3b55de;
+  color: #f5e5e5;
+  font-family: "Quando", serif;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +62,7 @@ class App extends React.Component {
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Button color="primary">Hello {activeUserName}</Button>
+            <Header>homely</Header>
           </Grid>
           <Grid item xs={8}>
             <p>what's up</p>
