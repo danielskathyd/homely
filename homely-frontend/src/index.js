@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import auth from "./reducers/auth"
 
 ReactDOM.render(
   <React.StrictMode>
