@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### If you get an error, simply type 'yarn' into the command line
+
 ### `yarn start`
 
 Runs the app in the development mode.<br />
