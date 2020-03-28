@@ -10,17 +10,15 @@ import axios from "axios";
 import { AppBar } from "./components/AppBar";
 import Todo from "./components/Todo";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  }
-}));
-const classes = useStyles();
+const Container = styled("div")`
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+`;
+
+const XD = styled("div")`
+  margin: right;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -60,33 +58,31 @@ class App extends React.Component {
       ? this.state.activeUser.username
       : "";
     return (
-      <div>
-        <div className={classes.root}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Button color="primary">Hello {activeUserName}</Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Todo></Todo>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.paper}>xs=6</Paper>
-            </Grid>
-            <Grid item xs={3}>
-              <h2>Here are your daily todos:</h2>
-            </Grid>
-            <Grid item xs={3}>
-              <ol>{this.renderTodos()}</ol>
-            </Grid>
-            <Grid item xs={3}>
-              <p>hi</p>
-            </Grid>
-            <Grid item xs={3}>
-              <p>hi</p>
-            </Grid>
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Button color="primary">Hello {activeUserName}</Button>
           </Grid>
-        </div>
-      </div>
+          <Grid item xs={6}>
+            <p>what's up</p>
+          </Grid>
+          <Grid item xs={6}>
+            <Todo></Todo>
+          </Grid>
+          <Grid item xs={3}>
+            <h2>Here are your daily todos:</h2>
+          </Grid>
+          <Grid item xs={3}>
+            <ol>{this.renderTodos()}</ol>
+          </Grid>
+          <Grid item xs={3}>
+            <p>hi</p>
+          </Grid>
+          <Grid item xs={3}>
+            <p>hi</p>
+          </Grid>
+        </Grid>
+      </Container>
     );
   }
 }
