@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
@@ -7,9 +12,10 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Todo from "./components/Todo";
 import SplitButton from "./components/SplitButton";
-import { Register } from "./components/Accounts/Register"
-import { Login } from "./components/Accounts/Login"
-import { LoginButton } from "./components/LoginButton"
+import Feed from "./components/Feed";
+import { Register } from "./components/Accounts/Register";
+import { Login } from "./components/Accounts/Login";
+import { LoginButton } from "./components/LoginButton";
 
 const Container = styled("div")`
   margin: auto;
@@ -66,21 +72,19 @@ class App extends React.Component {
       <Container>
         <Router>
           <Switch>
-            <Route expact path="/register" component={Register}/>
-            <Route expact path="/login" component={Login}/>
+            <Route expact path="/register" component={Register} />
+            <Route expact path="/login" component={Login} />
           </Switch>
-          <LoginButton/>
+          <LoginButton />
         </Router>
-        
+
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Header>homely</Header>
           </Grid>
-          <Grid item xs={6}>
-            <p>what's up</p>
-          </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={8}>
             <SplitButton></SplitButton>
+            <Feed></Feed>
           </Grid>
           <Grid item xs={4}>
             <Todo></Todo>
