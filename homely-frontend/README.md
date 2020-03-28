@@ -71,7 +71,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### `frontend installs`
 
-npm install @material-ui/core
+yarn add @material-ui/core
 npm install reactstrap -- remove later
 npm install axios
 
