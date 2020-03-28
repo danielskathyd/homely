@@ -50,25 +50,52 @@ class App extends React.Component {
       activeUserTodos: null
     };
     this.setToken = this.setToken.bind(this);
+    this.fetchUserInfo = this.fetchUserInfo.bind(this);
+    this.handleLogout = this.handleLogout.bind(this)
   }
   componentDidMount() {
     this.fetchUserInfo();
   }
   // Right now, you're always me
   fetchUserInfo() {
+    console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
     axios
-      .get("http://localhost:8000/api/users/")
-      .then(res =>
+      .get("http://localhost:8000/api/auth/user", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${this.state.activeUserToken}`
+        }
+      })
+      .then(res => {
         this.setState({
-          activeUser: res.data[0],
-          activeUserTodos: res.data[0]["todo_set"]
+        activeUser: res.data
         })
-      )
+      })
       .catch(err => console.log(err));
   }
 
   setToken(userToken) {
-    this.setState({ activeUserToken: userToken });
+    this.setState({ activeUserToken: userToken});
+    this.fetchUserInfo();
+  }
+  handleLogout() {
+    if(!this.state.activeUserToken) return;
+    console.log("Attemping to log out user using: ", `Token ${this.state.activeUserToken}`)
+    axios
+      .post("http://localhost:8000/api/auth/logout", null, {
+        headers: {
+          'Authorization': `Token ${this.state.activeUserToken}`
+        }
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({
+          activeUserToken: null,
+          activeUser: null,
+          activeUserTodos: null,
+        })
+      })
+      .catch(err => console.log(err));
   }
 
   renderTodos() {
@@ -80,7 +107,6 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUserToken);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -104,7 +130,10 @@ class App extends React.Component {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Header>homely</Header>
+            <Header>
+              homely: welcome {activeUserName}
+              <button onClick={this.handleLogout}>Logout</button>
+            </Header>
           </Grid>
           <Grid item xs={8}>
             <FeedColor>
