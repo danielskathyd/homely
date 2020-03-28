@@ -4,10 +4,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import { AppBar } from "./components/AppBar";
 import Todo from "./components/Todo";
 
 const Container = styled("div")`
@@ -15,11 +13,6 @@ const Container = styled("div")`
   justify-content: center;
   text-align: center;
 `;
-
-const XD = styled("div")`
-  margin: right;
-`;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -63,23 +56,11 @@ class App extends React.Component {
           <Grid item xs={12}>
             <Button color="primary">Hello {activeUserName}</Button>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={7}>
             <p>what's up</p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={5}>
             <Todo></Todo>
-          </Grid>
-          <Grid item xs={3}>
-            <h2>Here are your daily todos:</h2>
-          </Grid>
-          <Grid item xs={3}>
-            <ol>{this.renderTodos()}</ol>
-          </Grid>
-          <Grid item xs={3}>
-            <p>hi</p>
-          </Grid>
-          <Grid item xs={3}>
-            <p>hi</p>
           </Grid>
         </Grid>
       </Container>
