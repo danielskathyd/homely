@@ -31,6 +31,16 @@ const Header = styled("div")`
   font-family: "Quando", serif;
 `;
 
+const FeedColor = styled("div")`
+  background: #f2c0d8;
+`;
+
+const Sticky = styled("div")`
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -83,11 +93,15 @@ class App extends React.Component {
             <Header>homely</Header>
           </Grid>
           <Grid item xs={8}>
-            <SplitButton></SplitButton>
-            <Feed></Feed>
+            <FeedColor>
+              <SplitButton></SplitButton>
+              <Feed></Feed>
+            </FeedColor>
           </Grid>
           <Grid item xs={4}>
-            <Todo></Todo>
+            <Sticky>
+              <Todo></Todo>
+            </Sticky>
           </Grid>
         </Grid>
       </Container>
