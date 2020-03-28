@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
@@ -7,9 +12,10 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Todo from "./components/Todo";
 import SplitButton from "./components/SplitButton";
-import { Register } from "./components/Accounts/Register"
-import { Login } from "./components/Accounts/Login"
-import { LoginButton } from "./components/LoginButton"
+import Feed from "./components/Feed";
+import { Register } from "./components/Accounts/Register";
+import { Login } from "./components/Accounts/Login";
+import { LoginButton } from "./components/LoginButton";
 
 const Container = styled("div")`
   margin: auto;
@@ -23,6 +29,16 @@ const Header = styled("div")`
   background: #3b55de;
   color: #f5e5e5;
   font-family: "Quando", serif;
+`;
+
+const FeedColor = styled("div")`
+  background: #f2c0d8;
+`;
+
+const Sticky = styled("div")`
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 `;
 
 class App extends React.Component {
@@ -78,21 +94,23 @@ class App extends React.Component {
             />
             <Route expact path="/login" render={(props) => <Login {...props} setToken={this.setToken} />}/>
           </Switch>
-          <LoginButton/>
+          <LoginButton />
         </Router>
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Header>homely</Header>
           </Grid>
-          <Grid item xs={6}>
-            <p>what's up</p>
-          </Grid>
-          <Grid item xs={2}>
-            <SplitButton></SplitButton>
+          <Grid item xs={8}>
+            <FeedColor>
+              <SplitButton></SplitButton>
+              <Feed></Feed>
+            </FeedColor>
           </Grid>
           <Grid item xs={4}>
-            <Todo></Todo>
+            <Sticky>
+              <Todo></Todo>
+            </Sticky>
           </Grid>
         </Grid>
       </Container>
