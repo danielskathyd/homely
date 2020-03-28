@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import Todo from "./components/Todo";
+import SplitButton from "./components/SplitButton";
 
 const Container = styled("div")`
   margin: auto;
@@ -64,8 +64,11 @@ class App extends React.Component {
           <Grid item xs={12}>
             <Header>homely</Header>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <p>what's up</p>
+          </Grid>
+          <Grid item xs={2}>
+            <SplitButton></SplitButton>
           </Grid>
           <Grid item xs={4}>
             <Todo></Todo>
