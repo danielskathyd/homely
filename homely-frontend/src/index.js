@@ -4,6 +4,7 @@ import "./index.css";
 import AppBar from "./components/AppBar";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import auth from "./reducers/auth"
 
 ReactDOM.render(
   <React.StrictMode>

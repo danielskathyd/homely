@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import "./App.css";
@@ -9,6 +10,9 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import { AppBar } from "./components/AppBar";
 import Todo from "./components/Todo";
+import { Register } from "./components/Accounts/Register"
+import { Login } from "./components/Accounts/Login"
+import { LoginButton } from "./components/LoginButton"
 
 const Container = styled("div")`
   margin: auto;
@@ -58,31 +62,41 @@ class App extends React.Component {
       ? this.state.activeUser.username
       : "";
     return (
-      <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Button color="primary">Hello {activeUserName}</Button>
+      <div>
+        <Router>
+          <Switch>
+            <Route expact path="/register" component={Register}/>
+            <Route expact path="/login" component={Login}/>
+          </Switch>
+          <LoginButton/>
+        </Router>
+
+        <Container>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Button color="primary">Hello {activeUserName}</Button>
+            </Grid>
+            <Grid item xs={10}>
+              <p>what's up</p>
+            </Grid>
+            <Grid item xs={2}>
+              <Todo></Todo>
+            </Grid>
+            <Grid item xs={3}>
+              <h2>Here are your daily todos:</h2>
+            </Grid>
+            <Grid item xs={3}>
+              <ol>{this.renderTodos()}</ol>
+            </Grid>
+            <Grid item xs={3}>
+              <p>hi</p>
+            </Grid>
+            <Grid item xs={3}>
+              <p>hi</p>
+            </Grid>
           </Grid>
-          <Grid item xs={10}>
-            <p>what's up</p>
-          </Grid>
-          <Grid item xs={2}>
-            <Todo></Todo>
-          </Grid>
-          <Grid item xs={3}>
-            <h2>Here are your daily todos:</h2>
-          </Grid>
-          <Grid item xs={3}>
-            <ol>{this.renderTodos()}</ol>
-          </Grid>
-          <Grid item xs={3}>
-            <p>hi</p>
-          </Grid>
-          <Grid item xs={3}>
-            <p>hi</p>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </div>
     );
   }
 }
