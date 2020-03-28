@@ -72,6 +72,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ### `frontend installs`
 
 yarn add @material-ui/core
+yarn add @material-ui/icons
 
 npm install reactstrap -- remove later
 
