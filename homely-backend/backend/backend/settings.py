@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'homely',
+    'knox',
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

@@ -51,6 +51,10 @@ Install djangorestframework and django-cors-headers:
 pipenv install djangorestframework django-cors-headers
 ```
 
+```
+pipenv install django-rest-knox
+```
+
 Run Server:
 
 ```
