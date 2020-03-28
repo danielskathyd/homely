@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export class Register extends Component {
   state = {
@@ -13,7 +14,17 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('submit');
+    if(this.state.password !== this.state.password2) {
+      alert("Your passwords do not match!");
+      return;
+    }
+    axios
+      .post('http://localhost:8000/api/auth/register', this.state)
+      .then(res => {
+        let userToken = res.data.token;
+        this.props.setToken(userToken);
+      })
+      .catch(err => console.log(err));
   }
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });

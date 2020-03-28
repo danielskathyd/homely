@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export class Login extends Component {
   state = {
     username: '',
     password: '',
-    password2: ''
   }
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('submit');
+    axios
+      .post('http://localhost:8000/api/auth/login', this.state)
+      .then(res => {
+        let userToken = res.data.token;
+        this.props.setToken(userToken);
+      })
+      .catch(err => console.log(err));
   }
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { username, password, password2 } = this.state;
+    const { username, password } = this.state;
     return (
       <div>
         <div>
@@ -42,7 +48,7 @@ export class Login extends Component {
             </div>
             <div>
               <button type="submit">
-                Register
+                Login
               </button>
             </div>
             <p>

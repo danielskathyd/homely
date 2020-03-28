@@ -29,14 +29,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeUserToken: null,
       activeUser: null,
       activeUserTodos: null
     };
+    this.setToken = this.setToken.bind(this);
   }
   componentDidMount() {
     this.fetchUserInfo();
   }
-
   // Right now, you're always me
   fetchUserInfo() {
     axios
@@ -49,6 +50,11 @@ class App extends React.Component {
       )
       .catch(err => console.log(err));
   }
+
+  setToken(userToken) {
+    this.setState({ activeUserToken: userToken});
+  }
+
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -58,7 +64,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUserTodos);
+    console.log(this.state.activeUserToken);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -66,12 +72,15 @@ class App extends React.Component {
       <Container>
         <Router>
           <Switch>
-            <Route expact path="/register" component={Register}/>
-            <Route expact path="/login" component={Login}/>
+            <Route
+              expact path="/register"
+              render={(props) => <Register {...props} setToken={this.setToken} />}
+            />
+            <Route expact path="/login" render={(props) => <Login {...props} setToken={this.setToken} />}/>
           </Switch>
           <LoginButton/>
         </Router>
-        
+
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Header>homely</Header>
