@@ -63,4 +63,7 @@ Access admin interface at http://localhost:8000/admin::
 python manage.py createsuperuser
 ```
 
+Manage user APIs at http://localhost:8000/api/users.
 Manage todo APIs at http://localhost:8000/api/todos.
+
+`homely-backend/backend/homely` contains the pertinent django models and files.
