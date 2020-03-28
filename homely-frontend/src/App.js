@@ -56,10 +56,10 @@ class App extends React.Component {
           <Grid item xs={12}>
             <Button color="primary">Hello {activeUserName}</Button>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={8}>
             <p>what's up</p>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <Todo></Todo>
           </Grid>
         </Grid>
