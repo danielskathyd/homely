@@ -1,5 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
+import axios from "axios";
 
 export default function Todo() {
   const [state, setState] = React.useState({
@@ -16,6 +17,19 @@ export default function Todo() {
       title="my to-do list"
       columns={state.columns}
       data={state.data}
+      actions={[
+        {
+          icon: 'cloud-upload',
+          tooltip: 'Upload Todo',
+          onClick: (event, rowData) => {
+            console.log(rowData.name)
+          }
+        }
+      ]}
+      options={{
+        actionsColumnIndex: -1,
+        search: false
+      }}
       editable={{
         onRowAdd: newData =>
           new Promise(resolve => {
