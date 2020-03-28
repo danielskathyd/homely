@@ -72,3 +72,28 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ### `frontend installs`
 
 npm install @material-ui/core
+npm install reactstrap -- remove later
+npm install axios
+
+in package.json, we configured a proxy:
+
+```
+[...]
+"version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8000",
+  "dependencies": {
+[...]
+```
+
+This allows us to write API requests like:
+
+```
+axios.get("/api/todos/")
+```
+
+Instead of this:
+
+```
+axios.get("http://localhost:8000/api/todos/")
+```
