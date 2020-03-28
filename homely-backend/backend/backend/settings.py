@@ -58,7 +58,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
+
+LOGIN_REDIRECT_URL = 'index.html'
