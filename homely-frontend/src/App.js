@@ -36,7 +36,7 @@ const FeedColor = styled("div")`
 `;
 
 const Sticky = styled("div")`
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
 `;
@@ -68,7 +68,7 @@ class App extends React.Component {
   }
 
   setToken(userToken) {
-    this.setState({ activeUserToken: userToken});
+    this.setState({ activeUserToken: userToken });
   }
 
   renderTodos() {
@@ -89,10 +89,15 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route
-              expact path="/register"
-              render={(props) => <Register {...props} setToken={this.setToken} />}
+              expact
+              path="/register"
+              render={props => <Register {...props} setToken={this.setToken} />}
             />
-            <Route expact path="/login" render={(props) => <Login {...props} setToken={this.setToken} />}/>
+            <Route
+              expact
+              path="/login"
+              render={props => <Login {...props} setToken={this.setToken} />}
+            />
           </Switch>
           <LoginButton />
         </Router>
