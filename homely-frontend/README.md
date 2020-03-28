@@ -78,6 +78,10 @@ npm install reactstrap -- remove later
 
 npm install axios
 
+yarn add @emotion/core
+
+yarn add styled-components
+
 in package.json, we configured a proxy:
 
 ```
