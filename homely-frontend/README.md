@@ -82,6 +82,8 @@ yarn add @emotion/core
 
 yarn add styled-components
 
+yarn add material-table
+
 in package.json, we configured a proxy:
 
 ```
