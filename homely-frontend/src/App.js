@@ -155,7 +155,12 @@ class App extends React.Component {
       let className = todo.completed ? "checked" : "";
       let title = todo.title;
       todoList.push(
-        <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>{title}</li>
+          <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>
+            {title}<div onClick={(e) => {
+              this.deleteTodo(i);
+            }} className="close">X</div>
+          </li>
+
       );
     }
     this.setState({
@@ -232,14 +237,24 @@ class App extends React.Component {
     return;
   }
 
-  renderTodos() {
-    if (!this.state.activeUserTodos) return;
-    let todoList = [];
-    for (let todo of this.state.activeUserTodos) {
-      todoList.push(<li key={todo.id}>{todo.title}</li>);
+  deleteTodo(i) {
+    let myTodos = this.state.activeUserTodos;
+    let removedTodo = myTodos.splice(i,1)[0];
+    console.log("Removed todo:", removedTodo.title);
+    this.setState({
+      activeUserTodos: myTodos
+    });
+    this.generateTodoList();
+    // If we're logged in
+    if(this.state.activeUser) {
+      console.log("Attempting to delete todo with id:", removedTodo.id);
+      axios
+        .delete(`http://localhost:8000/api/todos/${removedTodo.id}/`)
+        .then(res => {console.log("Successfully deleted todo with id", removedTodo.id)})
+        .catch(err => console.log(err))
     }
-    return todoList;
   }
+
   render() {
     console.log(this.state.activeUser);
     let activeUserName = this.state.activeUser
@@ -265,7 +280,8 @@ class App extends React.Component {
       ? "welcome " + activeUserName + "!"
       : "";
     let myList = this.state.loggingIn ? null : (
-      <MyList onSubmit={this.addTodo} todos={this.state.todoList}></MyList>
+      <MyList onSubmit={this.addTodo}
+        todos={this.state.todoList} user={this.state.activeUser}></MyList>
     );
 
     if (this.state.isFetchingData || !this.state.data) {
