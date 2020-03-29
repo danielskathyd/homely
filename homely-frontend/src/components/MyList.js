@@ -15,10 +15,11 @@ export class MyList extends Component {
   }
 
   render() {
+    let user = this.props.user ? this.props.user.username + "'s" : "my";
     return(
         <div className="list-container">
             <div className="header">
-                <h1 className="todo-header">my to do list</h1>
+                <h1 className="todo-header">{user} to do list</h1>
             </div>
             <hr></hr>
             <ul className="todo-list">

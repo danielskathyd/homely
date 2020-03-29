@@ -5,7 +5,9 @@
     border-radius: 20px 0px 0px 20px;
     color: #3E3D3B;
     height: 100vh;
+    margin-top: 10px;
     padding: 0px;
+    box-shadow: -13px 13px 5px rgb(0,0,0,0.3);
 }
 
 .todo-header {
@@ -22,6 +24,11 @@
     background-color: transparent;
     font-size: 12px;
     font-family: "Quando", serif;
+    width: 300px;
+}
+
+.new-todo:focus {
+  outline: none;
 }
 
   /* Remove margins and padding from the list */
@@ -30,7 +37,7 @@
     padding: 0;
     list-style-type: none;
   }
-  
+
   /* Style the list items */
   ul li {
     cursor: pointer;
@@ -38,26 +45,28 @@
     padding: 8px 8px 8px 40px;
     font-size: 12px;
     transition: 0.2s;
-  
+
     /* make the list items unselectable */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   /* Darker background-color on hover */
   ul li:hover {
-    background: #ddd;
+    background: #A9A9A9;
+    animation: fade 1s ease;
+    color: white;
   }
-  
+
   /* When clicked on, add a background color and strike out text */
   ul li.checked {
-    background: #888;
+    background: #A9A9A9;
     color: #fff;
     text-decoration: line-through;
   }
-  
+
   /* Add a "checked" mark when clicked on */
   ul li.checked::before {
     content: '';
@@ -71,16 +80,31 @@
     height: 15px;
     width: 5px;
   }
-  
+
   /* Style the close button */
   .close {
     position: absolute;
-    right: 0;
-    top: 0;
-    padding: 12px 16px 12px 16px;
+    font-weight: bold;
+    height: 50%;
+    right: 25px;
+    top: 8px;
+    border-radius: 15px;
+    opacity: 0.6;
   }
-  
+
   .close:hover {
-    background-color: #f44336;
     color: white;
+    opacity: 1;
+    animation: fade 1s ease;
+  }
+
+  @keyframes fade {
+    from {
+      color: #3E3D3B;
+      opacity: 0.6;
+    }
+    to {
+      color: white;
+      opacity: 1;
+    }
   }

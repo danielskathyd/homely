@@ -88,6 +88,8 @@ yarn add material-table
 
 yarn add react-modal-image
 
+yarn add react-reveal
+
 in package.json, we configured a proxy:
 
 ```
