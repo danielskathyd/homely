@@ -19,7 +19,7 @@ import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import MyList from "./components/MyList";
-import Logo from "./images/logo.png"
+import Logo from "./images/logo.png";
 
 const Container = styled("div")`
   margin: auto;
@@ -176,74 +176,90 @@ class App extends React.Component {
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
-    return (
-      <Container>
-        <Router>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Header><Link to="/" style={{ textDecoration: 'none' }}>
-                <div className="logo-text">homely
-                <img src={Logo} className="logo"/></div>
-                {logButton}
-                <div className="user-greeting">{userGreeting}</div>
-              </Link></Header>
+    if (!this.state.activeUser) {
+      return (
+        <Container>
+          <Router>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Header>
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <div className="logo-text">
+                      homely
+                      <img src={Logo} className="logo" />
+                    </div>
+                    {logButton}
+                    <div className="user-greeting">{userGreeting}</div>
+                  </Link>
+                </Header>
+              </Grid>
+              <Grid item xs={8}>
+                <FeedColor>
+                  <SplitButton></SplitButton>
+                  <Feed></Feed>
+                </FeedColor>
+              </Grid>
+              <Grid item xs={4}>
+                <Switch>
+                  <Route
+                    expact
+                    path="/register"
+                    render={props => (
+                      <Register
+                        {...props}
+                        setToken={this.setToken}
+                        activeUser={this.state.activeUser}
+                      />
+                    )}
+                  />
+                  <Route
+                    expact
+                    path="/login"
+                    render={props => (
+                      <Login
+                        {...props}
+                        setToken={this.setToken}
+                        activeUser={this.state.activeUser}
+                      />
+                    )}
+                  />
+                </Switch>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <FeedColor>
-                <SplitButton></SplitButton>
-                <Feed></Feed>
-              </FeedColor>
+          </Router>
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <Router>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Header>
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <div className="logo-text">
+                      homely
+                      <img src={Logo} className="logo" />
+                    </div>
+                    {logButton}
+                    <div className="user-greeting">{userGreeting}</div>
+                  </Link>
+                </Header>
+              </Grid>
+              <Grid item xs={8}>
+                <FeedColor>
+                  <SplitButton></SplitButton>
+                  <Feed></Feed>
+                </FeedColor>
+              </Grid>
+              <Grid item xs={4}>
+                <MyList></MyList>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              {/* <Sticky>
-                <Todo
-                  todo_set={this.state.activeUserTodos}
-                  addTodo={this.addTodo}></Todo>
-              </Sticky> */}
-              <Switch>
-                <Route
-                  expact
-                  path="/register"
-                  render={props => (
-                    <Register
-                      {...props}
-                      setToken={this.setToken}
-                      activeUser={this.state.activeUser}
-                    />
-                  )}
-                />
-                <Route
-                  expact
-                  path="/login"
-                  render={props => (
-                    <Login
-                      {...props}
-                      setToken={this.setToken}
-                      activeUser={this.state.activeUser}
-                    />
-                  )}
-                />
-              </Switch>
-            </Grid>
-          </Grid>
-          <Grid item xs={8}>
-            <FeedColor>
-              <SplitButton></SplitButton>
-              <Feed></Feed>
-            </FeedColor>
-          </Grid>
-          <Grid item xs={4}>
-            {/* <Sticky>
-              <Todo
-                todo_set={this.state.activeUserTodos}
-                addTodo={this.addTodo}></Todo>
-            </Sticky> */}
-            {/* <Login></Login> */}
-            <MyList></MyList>
-          </Grid>
-        </Router>
-      </Container>
-    );
+          </Router>
+        </Container>
+      );
+    }
   }
 }
 

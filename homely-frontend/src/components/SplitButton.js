@@ -8,6 +8,12 @@ import FavoriteIcon from "@material-ui/icons/FitnessCenter";
 import ArtIcon from "@material-ui/icons/Brush";
 import GameIcon from "@material-ui/icons/VideogameAsset";
 import HeartIcon from "@material-ui/icons/Favorite";
+import styled from "styled-components";
+
+const Center = styled("div")`
+  justify-content: center;
+  margin: auto;
+`;
 
 const useStyles = makeStyles({
   root: {
@@ -24,33 +30,39 @@ export default function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={handleChange}
-      className={classes.root}
-    >
-      <BottomNavigationAction label="All" value="All" icon={<AllInboxIcon />} />
-      <BottomNavigationAction
-        label="Cooking"
-        value="Cooking"
-        icon={<FoodIcon />}
-      />
-      <BottomNavigationAction label="Art" value="Art" icon={<ArtIcon />} />
-      <BottomNavigationAction
-        label="Gaming"
-        value="Gaming"
-        icon={<GameIcon />}
-      />
-      <BottomNavigationAction
-        label="Health"
-        value="Health"
-        icon={<FavoriteIcon />}
-      />
-      <BottomNavigationAction
-        label="Adult Life"
-        value="Adult Life"
-        icon={<HeartIcon />}
-      />
-    </BottomNavigation>
+    <Center>
+      <BottomNavigation
+        value={value}
+        onChange={handleChange}
+        className={classes.root}
+      >
+        <BottomNavigationAction
+          label="All"
+          value="All"
+          icon={<AllInboxIcon />}
+        />
+        <BottomNavigationAction
+          label="Cooking"
+          value="Cooking"
+          icon={<FoodIcon />}
+        />
+        <BottomNavigationAction label="Art" value="Art" icon={<ArtIcon />} />
+        <BottomNavigationAction
+          label="Gaming"
+          value="Gaming"
+          icon={<GameIcon />}
+        />
+        <BottomNavigationAction
+          label="Health"
+          value="Health"
+          icon={<FavoriteIcon />}
+        />
+        <BottomNavigationAction
+          label="Adult Life"
+          value="Adult Life"
+          icon={<HeartIcon />}
+        />
+      </BottomNavigation>
+    </Center>
   );
 }
