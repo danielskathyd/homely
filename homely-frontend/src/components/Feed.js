@@ -9,7 +9,6 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import InfoIcon from "@material-ui/icons/Info";
 import styled from "styled-components";
 import ModalImage from "react-modal-image";
-import Fade from "react-reveal/Fade";
 
 import "./feed.css";
 

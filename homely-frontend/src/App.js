@@ -28,6 +28,7 @@ import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import InfoIcon from "@material-ui/icons/Info";
 import ModalImage from "react-modal-image";
+import Fade from "react-reveal/Fade";
 
 const Container = styled("div")`
   margin: auto;
@@ -56,13 +57,19 @@ const Sticky = styled("div")`
 `;
 
 const exampleTodos = [
-  {"id": 5, "title": "Hit the gym", "description": "a", "completed": false, "owner": 1},
-  {"id": 6, "title": "Pay bills", "description": "a", "completed": true, "owner": 1},
-  {"id": 7, "title": "Meet George", "description": "a", "completed": false, "owner": 1},
-  {"id": 8, "title": "Buy eggs", "description": "a", "completed": false, "owner": 1},
-  {"id": 9, "title": "Read a book", "description": "a", "completed": false, "owner": 1},
-  {"id": 10, "title": "Organize office", "description": "a", "completed": false, "owner": 1}
-]
+  { id: 5, title: "Hit the gym", description: "a", completed: false, owner: 1 },
+  { id: 6, title: "Pay bills", description: "a", completed: true, owner: 1 },
+  { id: 7, title: "Meet George", description: "a", completed: false, owner: 1 },
+  { id: 8, title: "Buy eggs", description: "a", completed: false, owner: 1 },
+  { id: 9, title: "Read a book", description: "a", completed: false, owner: 1 },
+  {
+    id: 10,
+    title: "Organize office",
+    description: "a",
+    completed: false,
+    owner: 1
+  }
+];
 
 class App extends React.Component {
   constructor(props) {
@@ -149,18 +156,29 @@ class App extends React.Component {
 
   generateTodoList() {
     if (!this.state.activeUserTodos) return;
-    var todoList = []
-    for(let i = 0; i < this.state.activeUserTodos.length; i++) {
+    var todoList = [];
+    for (let i = 0; i < this.state.activeUserTodos.length; i++) {
       let todo = this.state.activeUserTodos[i];
       let className = todo.completed ? "checked" : "";
       let title = todo.title;
       todoList.push(
-          <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>
-            {title}<div onClick={(e) => {
+        <li
+          key={i}
+          onClick={() => {
+            this.toggleComplete(i);
+          }}
+          className={className}
+        >
+          {title}
+          <div
+            onClick={e => {
               this.deleteTodo(i);
-            }} className="close">X</div>
-          </li>
-
+            }}
+            className="close"
+          >
+            X
+          </div>
+        </li>
       );
     }
     this.setState({
@@ -174,31 +192,34 @@ class App extends React.Component {
     myTodos[i].completed = !myTodos[i].completed;
 
     // not logged in
-    if(!this.state.activeUser) {
+    if (!this.state.activeUser) {
       console.log("Not logged in");
       this.setState({
         activeUserTodos: myTodos
-      })
+      });
       this.generateTodoList();
       return;
     }
     console.log("attempting request on", myTodos[i].id, "with", myTodos[i]);
     axios
-      .put(`http://localhost:8000/api/todos/${myTodos[i].id}/`,
-      {
-          "title": myTodos[i].title,
-          "description": myTodos[i].description,
-          "completed": myTodos[i].completed,
-      }, {
-        headers: {
-          "Content-Type": "application/json"
+      .put(
+        `http://localhost:8000/api/todos/${myTodos[i].id}/`,
+        {
+          title: myTodos[i].title,
+          description: myTodos[i].description,
+          completed: myTodos[i].completed
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      })
+      )
       .then(res => {
         console.log("successfully wrote");
         this.setState({
           activeUserTodos: myTodos
-        })
+        });
         this.generateTodoList();
       })
       .catch(err => console.log(err));
@@ -239,19 +260,21 @@ class App extends React.Component {
 
   deleteTodo(i) {
     let myTodos = this.state.activeUserTodos;
-    let removedTodo = myTodos.splice(i,1)[0];
+    let removedTodo = myTodos.splice(i, 1)[0];
     console.log("Removed todo:", removedTodo.title);
     this.setState({
       activeUserTodos: myTodos
     });
     this.generateTodoList();
     // If we're logged in
-    if(this.state.activeUser) {
+    if (this.state.activeUser) {
       console.log("Attempting to delete todo with id:", removedTodo.id);
       axios
         .delete(`http://localhost:8000/api/todos/${removedTodo.id}/`)
-        .then(res => {console.log("Successfully deleted todo with id", removedTodo.id)})
-        .catch(err => console.log(err))
+        .then(res => {
+          console.log("Successfully deleted todo with id", removedTodo.id);
+        })
+        .catch(err => console.log(err));
     }
   }
 
@@ -280,8 +303,11 @@ class App extends React.Component {
       ? "welcome " + activeUserName + "!"
       : "";
     let myList = this.state.loggingIn ? null : (
-      <MyList onSubmit={this.addTodo}
-        todos={this.state.todoList} user={this.state.activeUser}></MyList>
+      <MyList
+        onSubmit={this.addTodo}
+        todos={this.state.todoList}
+        user={this.state.activeUser}
+      ></MyList>
     );
 
     if (this.state.isFetchingData || !this.state.data) {
@@ -313,7 +339,9 @@ class App extends React.Component {
             <Grid item xs={8}>
               <FeedColor>
                 <SplitButton></SplitButton>
-                <Feed data={tileData}></Feed>
+                <Fade left>
+                  <Feed data={tileData}></Feed>
+                </Fade>
               </FeedColor>
             </Grid>
             <Grid item xs={4}>
