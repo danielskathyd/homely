@@ -43,11 +43,13 @@ const TitlebarGridList = props => {
       >
         {props.data.map((tile, index) => (
           <GridListTile key={props.data[index].id} cols={props.cols || 1}>
-            <ModalImage
-              small={props.data[index].image}
-              large={props.data[index].image}
-              alt={props.data[index].title}
-            />
+            <Fade bottom>
+              <ModalImage
+                small={props.data[index].image}
+                large={props.data[index].image}
+                alt={props.data[index].description}
+              />
+            </Fade>
             <GridListTileBar
               title={props.data[index].title}
               subtitle={<span>by: {props.data[index].owner}</span>}
