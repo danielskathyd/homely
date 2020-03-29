@@ -10,6 +10,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import tileData from "./tileData";
 import styled from "styled-components";
 import ModalImage from "react-modal-image";
+import "./feed.css";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,9 +35,9 @@ export default function TitlebarGridList() {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} spacing={15} className={classes.gridList}>
+      <GridList cellHeight={180} spacing={10} className={classes.gridList} cols={3}>
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
+          <GridListTile key={tile.img} cols={tile.cols || 1}>
             <ModalImage small={tile.img} large={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}

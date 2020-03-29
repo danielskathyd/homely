@@ -1,0 +1,26 @@
+.makeStyles-root-104 {
+    border-radius: 20px;
+    margin: 0px 0px 20px 0px;
+}
+
+.makeStyles-root-123 {
+    background-color: transparent !important;
+}
+
+.MuiGridListTile-tile {
+    border-radius: 20px;
+}
+
+.MuiGridListTileBar-rootSubtitle {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.MuiGridListTileBar-titleWrap {
+    font-family: "Quando", serif;
+    color: #524646 !important;
+    text-align: left;
+}
+
+.MuiGridListTileBar-rootSubtitle {
+    height: 50px;
+}
