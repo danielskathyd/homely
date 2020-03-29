@@ -18,16 +18,8 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
-import { MyList }   from "./components/MyList";
+import { MyList } from "./components/MyList";
 import Logo from "./images/logo.png";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import InfoIcon from '@material-ui/icons/Info';
-import ModalImage from "react-modal-image";
 
 const Container = styled("div")`
   margin: auto;
@@ -55,22 +47,43 @@ const Sticky = styled("div")`
   top: 0;
 `;
 
+const exampleTodos = [
+  {"id": 5, "title": "Hit the gym", "description": "a", "completed": false, "owner": 1},
+  {"id": 6, "title": "Pay bills", "description": "a", "completed": true, "owner": 1},
+  {"id": 7, "title": "Meet George", "description": "a", "completed": false, "owner": 1},
+  {"id": 8, "title": "Buy eggs", "description": "a", "completed": false, "owner": 1},
+  {"id": 9, "title": "Read a book", "description": "a", "completed": false, "owner": 1},
+  {"id": 10, "title": "Organize office", "description": "a", "completed": false, "owner": 1}
+]
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: [],
+      activeUserTodos: exampleTodos,
       loggingIn: false,
-      isFetchingData: false,
-      data: null
+      todoList: []
+      // [
+      //   <li>Hit the gym</li>,
+      //   <li className="checked">Pay bills</li>,
+      //   <li>Meet George</li>,
+      //   <li>Buy eggs</li>,
+      //   <li>Read a book</li>,
+      //   <li>Organize office</li>,
+      // ]
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
     this.generateTodoList = this.generateTodoList.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("GENERATING TODO");
+    this.generateTodoList();
   }
 
   fetchUserInfo() {
@@ -90,6 +103,7 @@ class App extends React.Component {
           activeUser: res.data,
           activeUserTodos: res.data.todo_set
         });
+        this.generateTodoList();
       })
       .catch(err => console.log(err));
   }
@@ -122,14 +136,39 @@ class App extends React.Component {
 
   generateTodoList() {
     if (!this.state.activeUserTodos) return;
-    let myData = [];
-    for (let todo of this.state.activeUserTodos) {
-      myData.push({
-        name: todo.title
-        // completed: todo.completed,
-      });
+    var todoList = []
+    for(let i = 0; i < this.state.activeUserTodos.length; i++) {
+      let todo = this.state.activeUserTodos[i];
+      let className = todo.completed ? "checked" : "";
+      let title = todo.title;
+      todoList.push(
+        <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>{title}</li>
+      );
     }
-    return myData;
+    this.setState({
+      todoList: todoList
+    });
+  }
+
+  toggleComplete(i) {
+    if (this.state.activeUserTodos.length <= i) return;
+    let myTodos = this.state.activeUserTodos;
+    myTodos[i].completed = !myTodos[i].completed;
+    console.log("attempting request on", myTodos[i].id, "with", myTodos[i]);
+    axios
+      .put(`http://localhost:8000/api/todos/${myTodos[i].id}/`, myTodos[i], {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => {
+        console.log("successfully wrote");
+        this.setState({
+          activeUserTodos: myTodos
+        })
+        this.generateTodoList();
+      })
+      .catch(err => console.log(err));
   }
 
   addTodo(newData) {
@@ -155,26 +194,13 @@ class App extends React.Component {
         let myTodos = this.state.activeUserTodos;
         myTodos.push(newTodo);
         this.setState({ activeUserTodos: myTodos });
-        console.log(myTodos);
+        // console.log(myTodos);
         return true;
       })
       .catch(err => console.log(err));
     return false;
   }
-  componentDidMount () {
-      this.setState({ isFetchingData: true });
-      axios
-        .get("http://localhost:8000/api/todos")
-        .then(res => {
-          console.log("hello")
-          this.setState({
-            isFetchingData: false,
-            data: res.data
-          });
 
-        })
-        .catch(err => console.log(err));
-    }
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -183,8 +209,10 @@ class App extends React.Component {
     }
     return todoList;
   }
+
   render() {
-    console.log(this.state.loggingIn);
+    console.log("TODO LIST");
+    console.log(this.state.todoList);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -202,13 +230,7 @@ class App extends React.Component {
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
-    let myList = this.state.loggingIn ? null : <MyList todos={this.state.activeUserTodos}></MyList>;
-
-    if (this.state.isFetchingData || !this.state.data) {
-      return <p></p>;
-    }
-
-    let tileData = this.state.data
+    let myList = this.state.loggingIn ? null : <MyList todos={this.state.todoList}></MyList>;
     return (
         <Container>
           <Router>
@@ -230,29 +252,7 @@ class App extends React.Component {
               <Grid item xs={8}>
                 <FeedColor>
                   <SplitButton></SplitButton>
-                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
-                      <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
-                        {tileData.map(tile => (
-                          <GridListTile key={tile.id}>
-                            <ModalImage small={tile.image} large={tile.image} alt={tile.title} />
-                            {/* <img src={tile.image} alt={tile.title} /> */}
-                            <GridListTileBar
-                              title={tile.title}
-                              subtitle={<span>by: {tile.owner}</span>}
-                              actionIcon={
-                                <IconButton
-                                  aria-label={`star ${tile.title}`}
-                                  style = {{color: 'rgba(255, 255, 255, 0.54)'}}
-                                >
-                                  <StarBorderIcon />
-                                </IconButton>
-                              }
-                              actionPosition="right"
-                            />
-                          </GridListTile>
-                        ))}
-                      </GridList>
-                    </div>
+                  <Feed></Feed>
                 </FeedColor>
               </Grid>
               <Grid item xs={4}>

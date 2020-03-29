@@ -5,6 +5,9 @@ import axios from "axios"
 export class MyList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      todos: []
+    }
   }
 
   render() {
@@ -16,12 +19,8 @@ export class MyList extends Component {
             <hr></hr>
             <ul className="todo-list">
                 <li><input type="text" className="new-todo" placeholder="Add a new task..."></input></li>
-                <li>Hit the gym</li>
-                <li className="checked">Pay bills</li>
-                <li>Meet George</li>
-                <li>Buy eggs</li>
-                <li>Read a book</li>
-                <li>Organize office</li>
+                {this.props.todos}
+
             </ul>
         </div>
     );
