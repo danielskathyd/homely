@@ -86,6 +86,8 @@ yarn add styled-components
 
 yarn add material-table
 
+yarn add react-modal-image
+
 in package.json, we configured a proxy:
 
 ```
