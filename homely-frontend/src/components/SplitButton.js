@@ -1,25 +1,56 @@
 import React from "react";
-import "./dropdown.css"
+import { makeStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import AllInboxIcon from "@material-ui/icons/AllInbox";
+import FoodIcon from "@material-ui/icons/Restaurant";
+import FavoriteIcon from "@material-ui/icons/FitnessCenter";
+import ArtIcon from "@material-ui/icons/Brush";
+import GameIcon from "@material-ui/icons/VideogameAsset";
+import HeartIcon from "@material-ui/icons/Favorite";
 
-const options = [
-  "All",
-  "Cooking",
-  "Art",
-  "Gaming",
-  "Health"
-];
+const useStyles = makeStyles({
+  root: {
+    width: 500
+  }
+});
 
-export default function SplitButton() {
+export default function LabelBottomNavigation() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState("recents");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div id="myDropdown" class="dropdown-content">
-      <a href="#all">All</a>
-      <a href="#cooking">Cooking</a>
-      <a href="#art">Art</a>
-      <a href="#gaming">Gaming</a>
-      <a href="#health">Health</a>
-    </div>
-    </div>
+    <BottomNavigation
+      value={value}
+      onChange={handleChange}
+      className={classes.root}
+    >
+      <BottomNavigationAction label="All" value="All" icon={<AllInboxIcon />} />
+      <BottomNavigationAction
+        label="Cooking"
+        value="Cooking"
+        icon={<FoodIcon />}
+      />
+      <BottomNavigationAction label="Art" value="Art" icon={<ArtIcon />} />
+      <BottomNavigationAction
+        label="Gaming"
+        value="Gaming"
+        icon={<GameIcon />}
+      />
+      <BottomNavigationAction
+        label="Health"
+        value="Health"
+        icon={<FavoriteIcon />}
+      />
+      <BottomNavigationAction
+        label="Adult Life"
+        value="Adult Life"
+        icon={<HeartIcon />}
+      />
+    </BottomNavigation>
   );
 }
