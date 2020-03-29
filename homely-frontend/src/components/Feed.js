@@ -7,7 +7,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import InfoIcon from "@material-ui/icons/Info";
-import tileData from "./tileData";
 import styled from "styled-components";
 import ModalImage from "react-modal-image";
 import "./feed.css";
@@ -30,21 +29,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function TitlebarGridList() {
+const TitlebarGridList = props => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} spacing={10} className={classes.gridList} cols={3}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img} cols={tile.cols || 1}>
-            <ModalImage small={tile.img} large={tile.img} alt={tile.title} />
+      <GridList
+        cellHeight={180}
+        spacing={10}
+        className={classes.gridList}
+        cols={3}
+      >
+        {props.data.map((tile, index) => (
+          <GridListTile key={props.data[index].id} cols={props.cols || 1}>
+            <ModalImage
+              small={props.data[index].image}
+              large={props.data[index].image}
+              alt={props.data[index].title}
+            />
             <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
+              title={props.data[index].title}
+              subtitle={<span>by: {props.data[index].owner}</span>}
               actionIcon={
                 <IconButton
-                  aria-label={`star ${tile.title}`}
+                  aria-label={`star ${props.data[index].title}`}
                   className={classes.icon}
                 >
                   <StarBorderIcon />
@@ -58,4 +66,6 @@ export default function TitlebarGridList() {
       </GridList>
     </div>
   );
-}
+};
+
+export default TitlebarGridList;
