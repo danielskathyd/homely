@@ -209,7 +209,6 @@ class App extends React.Component {
     }
 
     let tileData = this.state.data
-
     return (
         <Container>
           <Router>
