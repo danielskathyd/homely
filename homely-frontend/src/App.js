@@ -289,6 +289,7 @@ class App extends React.Component {
     }
 
     let tileData = this.state.data;
+    console.log(tileData);
     return (
       <Container>
         <Router>
@@ -312,48 +313,7 @@ class App extends React.Component {
             <Grid item xs={8}>
               <FeedColor>
                 <SplitButton></SplitButton>
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "space-around",
-                    overflow: "hidden"
-                  }}
-                >
-                  <GridList
-                    cellHeight={180}
-                    spacing={15}
-                    style={{
-                      width: 1000,
-                      height: 580,
-                      transform: "translateZ(0)"
-                    }}
-                  >
-                    {tileData.map(tile => (
-                      <GridListTile key={tile.id}>
-                        <ModalImage
-                          small={tile.image}
-                          large={tile.image}
-                          alt={tile.title}
-                        />
-                        {/* <img src={tile.image} alt={tile.title} /> */}
-                        <GridListTileBar
-                          title={tile.title}
-                          subtitle={<span>by: {tile.owner}</span>}
-                          actionIcon={
-                            <IconButton
-                              aria-label={`star ${tile.title}`}
-                              style={{ color: "rgba(255, 255, 255, 0.54)" }}
-                            >
-                              <StarBorderIcon />
-                            </IconButton>
-                          }
-                          actionPosition="right"
-                        />
-                      </GridListTile>
-                    ))}
-                  </GridList>
-                </div>
+                <Feed data={tileData}></Feed>
               </FeedColor>
             </Grid>
             <Grid item xs={4}>
