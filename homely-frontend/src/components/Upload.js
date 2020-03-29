@@ -43,6 +43,7 @@ export class Upload extends Component {
   }
 
   onSubmit() {
+    console.log("form submitted");
     this.props.onSubmit(this.state)
     this.setState({
       inputs: {
@@ -63,10 +64,10 @@ export class Upload extends Component {
         <div class="upload-container">
             <p className="log-header">Full Send.</p>
             <p className="body">It's time to share the small (or big) successes!</p>
-            <form onSubmit={this.onSubmit}>
+
                 <label>Title</label><br></br>
                 <input size="50" type="text" name="title" className="login-input"
-                  onChange={this.onChange} defaultValue={this.props.title}></input><br></br>
+                  onChange={this.onChange}></input><br></br>
                 <label>Picture/Video</label><br></br>
                 <input type="file" name="image"
                   className="upload-btn styled-button"/><br></br>
@@ -84,10 +85,10 @@ export class Upload extends Component {
                   <div className="cat-button" id="cat-btn-5" onClick={(e) => this.handleCatButton(e, 5)}> <HeartIcon /></div>
                 </div><br></br>
                 <div className="container">
-                  <button class="upload-btn styled-button">Share</button>
+                  <button onClick={this.onSubmit} class="upload-btn styled-button">Share</button>
                   <div className="error body">{errorText}</div>
                 </div>
-            </form>
+
         </div>
     );
   }

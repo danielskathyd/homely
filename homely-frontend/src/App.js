@@ -241,7 +241,6 @@ class App extends React.Component {
       title: newData,
       completed: false,
       owner: this.state.activeUser ? this.state.activeUser.username : ""
-
     };
 
     // If user isn't logged in
@@ -291,7 +290,6 @@ class App extends React.Component {
   }
 
   uploadTodo(state) {
-    debugger;
     let myCategory;
     switch(state.selectedCategory) {
       case 1:
@@ -373,7 +371,7 @@ class App extends React.Component {
 
     let tileData = this.state.data;
     let upload = this.state.sharedTodoTitle
-      ? (<div className="fade-in"><Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/></div>) : null;
+      ? (<div className="fade-in"><Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/></div>) : (<div className="fade-out"><Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/></div>)
     return (
       <Container>
         <Router>

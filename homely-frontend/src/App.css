@@ -1,5 +1,5 @@
 html, body {
-  overflow: hidden;
+  overflow: auto;
 }
 
 @keyframes App-logo-spin {

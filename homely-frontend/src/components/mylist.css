@@ -213,6 +213,12 @@
   visibility: visible;
 }
 
+.fade-out {
+  animation: fadeout 2s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
 .login-input {
   width: 60%;
 }
