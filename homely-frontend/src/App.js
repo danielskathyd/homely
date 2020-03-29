@@ -7,7 +7,6 @@ import {
   Link
 } from "react-router-dom";
 import styled from "styled-components";
-import logo from "./logo.svg";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
@@ -20,6 +19,7 @@ import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import MyList from "./components/MyList";
+import Logo from "./images/logo.png"
 
 const Container = styled("div")`
   margin: auto;
@@ -171,11 +171,12 @@ class App extends React.Component {
         <Router>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Header>
-                homely
+              <Header><Link to="/" style={{ textDecoration: 'none' }}>
+                <div className="logo-text">homely
+                <img src={Logo} className="logo"/></div>
                 {logButton}
                 <div className="user-greeting">{userGreeting}</div>
-              </Header>
+              </Link></Header>
             </Grid>
             <Grid item xs={8}>
               <FeedColor>
