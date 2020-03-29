@@ -18,7 +18,14 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import Register from "./components/Register";
 import Login from "./components/Login";
-
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import InfoIcon from '@material-ui/icons/Info';
 const Container = styled("div")`
   margin: auto;
   justify-content: center;
@@ -49,7 +56,9 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: []
+      activeUserTodos: [],
+      isFetchingData: false,
+      data: null
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
@@ -140,6 +149,20 @@ class App extends React.Component {
       .catch(err => console.log(err));
     return false;
   }
+  componentDidMount () {
+    this.setState({ isFetchingData: true });
+    axios
+      .get("http://localhost:8000/api/todos")
+      .then(res => {
+        console.log("hello")
+        this.setState({
+          isFetchingData: false,
+          data: res.data
+        });
+
+      })
+      .catch(err => console.log(err));
+  }
 
   renderTodos() {
     if (!this.state.activeUserTodos) return;
@@ -154,6 +177,17 @@ class App extends React.Component {
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
+    
+    if (this.state.isFetchingData) {
+      return <p>Loading data</p>;
+    }
+
+    if (!this.state.data) {
+      return <p>No data</p>;
+    }
+
+    console.log("hello")
+    var tileData = this.state.data
     return (
       <Container>
         <Router>
@@ -182,7 +216,28 @@ class App extends React.Component {
           <Grid item xs={8}>
             <FeedColor>
               <SplitButton></SplitButton>
-              <Feed></Feed>
+              <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
+                <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
+                  <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                    <ListSubheader component="div">Your Feed</ListSubheader>
+                  </GridListTile>
+                  {tileData.map((tile) => (
+                    <GridListTile key={tile.id}>
+                      <img src={tile.image} alt={tile.title} />
+                      <GridListTileBar
+                        title={tile.title}
+                        subtitle={<span>by: {tile.owner}</span>}
+                        actionIcon={
+                          <IconButton aria-label={`star ${tile.title}`} style = {{color: 'rgba(255, 255, 255, 0.54)'}}>
+                            <StarBorderIcon />
+                          </IconButton>
+                        }
+                        actionPosition="right"
+                      />
+                    </GridListTile>
+                  ))}
+                </GridList>
+              </div>
             </FeedColor>
           </Grid>
           <Grid item xs={4}>

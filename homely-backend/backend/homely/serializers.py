@@ -8,7 +8,7 @@ from .models import Todo
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = ('id', 'title', 'description', 'completed', 'owner', 'created_at')
+        fields = ('id', 'title', 'description', 'completed', 'owner', 'created_at','image','activity_type')
 
 class UserSerializer(serializers.ModelSerializer):
     todo_set = TodoSerializer(read_only=True, many=True)

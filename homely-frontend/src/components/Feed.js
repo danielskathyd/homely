@@ -48,8 +48,8 @@ export default function TitlebarGridList() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <GridList cellHeight={180} spacing={15} className={classes.gridList}>
+    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
+      <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">Your Feed</ListSubheader>
         </GridListTile>
@@ -60,12 +60,11 @@ export default function TitlebarGridList() {
               title={tile.title}
               subtitle={<span>by: {tile.author}</span>}
               actionIcon={
-                <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
+                <IconButton aria-label={`star ${tile.title}`} style = {{color: 'rgba(255, 255, 255, 0.54)'}}>
                   <StarBorderIcon />
                 </IconButton>
               }
               actionPosition="right"
-              className={classes.titleBar}
             />
           </GridListTile>
         ))}
