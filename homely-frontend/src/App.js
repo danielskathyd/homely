@@ -14,9 +14,10 @@ import { Todo } from "./components/Todo";
 import SplitButton from "./components/SplitButton";
 import Feed from "./components/Feed";
 // import { Register } from "./components/Accounts/Register";
-import { Login } from "./components/Accounts/Login";
+// import { Login } from "./components/Accounts/Login";
 import { LoginButton } from "./components/LoginButton";
 import Register from "./components/Register";
+import Login from "./components/Login";
 
 const Container = styled("div")`
   margin: auto;
@@ -157,6 +158,7 @@ class App extends React.Component {
             <Sticky>
               <Todo todo_set={this.generateTodoList()}></Todo>
             </Sticky>
+            {/* <Login></Login> */}
           </Grid>
         </Grid>
       </Container>

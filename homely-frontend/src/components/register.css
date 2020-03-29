@@ -31,18 +31,25 @@ label {
     font-size: 12px;
 }
 
-button {
+.styled-button {
     background-color: #3B55DE;
     font-family: "Quando", serif;
     border-radius: 10px;
     color: #FEFDFD;
     border: none;
     padding: 7px 10px;
-    margin: 0px 0px;
+    margin: 10px 0px;
     box-shadow: 0 5px #28357B;
 }
 
-button:active {
+.styled-button:active {
     box-shadow: 0 1px #666;
     transform: translateY(4px);
   }
+
+.forgot-password {
+    margin: 0px;
+    font-size: 10px;
+    color: #3B55DE;
+    text-decoration: underline;
+}

@@ -16,11 +16,11 @@ export default function Register() {
                 <label>Username</label><br></br>
                 <input size="50" type="text" placeholder="johnnyappleseed"></input><br></br>
                 <label>Password</label><br></br>
-                <input size="50" type="text"></input><br></br>
+                <input size="50" type="text" placeholder="••••••••••••"></input><br></br>
                 <label>Verify Password</label><br></br>
-                <input size="50" type="text"></input>
+                <input size="50" type="text" placeholder="••••••••••••"></input>
             </form>
-            <button>Connect</button>
+            <button class="styled-button">Connect</button>
         </div>
     );
 }
