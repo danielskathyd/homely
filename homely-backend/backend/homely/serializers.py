@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
     ptodo_set = PersonalTodoSerializer(read_only=True, many=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'todo_set', 'ptodo_set')
+        fields = ('id', 'username', 'email', 'todo_set', 'ptodo_set')
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:

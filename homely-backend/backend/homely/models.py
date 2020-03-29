@@ -17,7 +17,7 @@ class Todo(models.Model):
 class PersonalTodo(models.Model):
     title = models.CharField(max_length=120)
     completed = models.BooleanField(default=False)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, to_field="username")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, to_field="username", related_name="ptodo_set")
     created_at = models.DateTimeField(auto_now_add=True)
     
     def _str_(self):
