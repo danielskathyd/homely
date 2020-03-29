@@ -18,7 +18,7 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
-import MyList  from "./components/MyList";
+import { MyList }   from "./components/MyList";
 import Logo from "./images/logo.png";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
