@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./register.css"
 import axios from "axios"
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 
 export class Login extends React.Component {
   state = {
@@ -46,7 +46,9 @@ export class Login extends React.Component {
                 <p class="forgot-password">Forgot password?</p>
                 <button class="styled-button" type="submit">Connect</button><br></br>
             </form>
-            <button class="styled-button">I don't have an account</button>
+            <Link to="/register">
+              <button class="styled-button">I don't have an account</button>
+            </Link>
         </div>
     );
   }

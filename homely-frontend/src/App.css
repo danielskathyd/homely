@@ -38,3 +38,27 @@
     transform: rotate(360deg);
   }
 }
+
+button {
+    background-color: #FCEDE3;
+    font-family: "Quando", serif;
+    border-radius: 10px;
+    color: #3E3D3B;
+    border: none;
+    padding: 7px 10px;
+    margin: 10px 0px;
+    box-shadow: 0 5px #E5A1C2;
+    cursor: pointer;
+    margin: -20px 0px 0px 0px;
+}
+
+button:active {
+    box-shadow: 0 1px #666;
+    transform: translateY(4px);
+    cursor: pointer;
+}
+
+.log-button {
+  display: inline-block;
+  float: right;
+}

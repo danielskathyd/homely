@@ -3,7 +3,8 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  Link
 } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.svg";
@@ -49,7 +50,7 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: []
+      activeUserTodos: [],
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
@@ -94,7 +95,7 @@ class App extends React.Component {
           activeUserToken: null,
           activeUser: null,
           activeUserTodos: [],
-        })
+        });
       })
       .catch(err => console.log(err));
   }
@@ -154,18 +155,17 @@ class App extends React.Component {
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
+    let logButton = this.state.activeUser
+      ? <Link to="/"><button onClick={this.handleLogout}>Logout</button></Link>
+      : (<Link to="/login"><button>Login</button></Link>)
     return (
       <Container>
         <Router>
-
-          <LoginButton />
-
-
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Header>
                 homely: welcome {activeUserName}
-                <button onClick={this.handleLogout}>Logout</button>
+                <div className="log-button">{logButton}</div>
               </Header>
             </Grid>
             <Grid item xs={8}>
