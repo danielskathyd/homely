@@ -1,6 +1,6 @@
 # homely - the productivity and wellness platform
 #### Kathy Daniels, Bryan Wong, Caleb Terrill, Jay Park, Fred Chu
-### [Figma Design](https://www.figma.com/file/LgFWGLVNPVneEaJUmEv9mL/homely?node-id=0%3A1) [Devpost](https://devpost.com/software/homely-15mlc4)
+### [Figma Design](https://www.figma.com/file/LgFWGLVNPVneEaJUmEv9mL/homely?node-id=0%3A1)|[Devpost](https://devpost.com/software/homely-15mlc4)|[Video Demo](https://www.youtube.com/watch?v=4wbE_BZI1kU)
 
 ## Organization 
 The backend and frontend source code for this project is organized into the homely-backend and homely-frontend folders respectively. Each contains a README on all the installations necessary to host the Django/React servers locally. Our Django project is contained in homely-backend/backend, in which the homely app can be found as well as our database file db.sqlite3. Images are stored in homely-backend/backend/media/gallery. 
