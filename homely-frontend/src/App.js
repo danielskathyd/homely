@@ -10,7 +10,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import Todo from "./components/Todo";
+import { Todo } from "./components/Todo";
 import SplitButton from "./components/SplitButton";
 import Feed from "./components/Feed";
 import { Register } from "./components/Accounts/Register";
@@ -51,12 +51,10 @@ class App extends React.Component {
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
+    this.generateTodoList = this.generateTodoList.bind(this);
     this.handleLogout = this.handleLogout.bind(this)
   }
-  componentDidMount() {
-    this.fetchUserInfo();
-  }
-  // Right now, you're always me
+
   fetchUserInfo() {
     console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
     axios
@@ -68,12 +66,12 @@ class App extends React.Component {
       })
       .then(res => {
         this.setState({
-        activeUser: res.data
+        activeUser: res.data,
+        activeUserTodos: res.data.todo_set
         })
       })
       .catch(err => console.log(err));
   }
-
   setToken(userToken) {
     this.setState({ activeUserToken: userToken});
     this.fetchUserInfo();
@@ -98,6 +96,18 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
 
+  generateTodoList() {
+    if(!this.state.activeUserTodos) return;
+    let myData = [];
+    for(let todo of this.state.activeUserTodos) {
+      myData.push({
+        name: todo.title,
+        // completed: todo.completed,
+      });
+    }
+    return myData;
+  }
+
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -107,6 +117,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
+    console.log(this.state.activeUserTodos);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -138,7 +149,7 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={4}>
             <Sticky>
-              <Todo></Todo>
+              <Todo todo_set={this.generateTodoList()}></Todo>
             </Sticky>
           </Grid>
         </Grid>
