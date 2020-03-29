@@ -39,7 +39,6 @@
     margin: 10px 0px;
     box-shadow: 0 5px #E5A1C2;
     cursor: pointer;
-    margin: 0px 0px 0px 0px;
 }
 
 .log-button:active {
@@ -56,5 +55,5 @@
 .user-greeting {
   display: inline-block;
   float: right;
-  margin: 8px 8px;
+  margin: 18px 8px;
 }

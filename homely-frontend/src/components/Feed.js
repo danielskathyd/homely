@@ -35,13 +35,9 @@ export default function TitlebarGridList() {
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} spacing={15} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
-          <ListSubheader component="div">Your Feed</ListSubheader>
-        </GridListTile>
         {tileData.map(tile => (
           <GridListTile key={tile.img}>
             <ModalImage small={tile.img} large={tile.img} alt={tile.title} />
-            {/* <img src={tile.img} alt={tile.title} /> */}
             <GridListTileBar
               title={tile.title}
               subtitle={<span>by: {tile.author}</span>}
