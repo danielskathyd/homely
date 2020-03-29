@@ -19,6 +19,7 @@ import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import { MyList } from "./components/MyList";
+import { Upload } from "./components/Upload";
 import Logo from "./images/logo.png";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -57,11 +58,11 @@ const Sticky = styled("div")`
 `;
 
 const exampleTodos = [
-  { id: 5, title: "Hit the gym", description: "a", completed: false, owner: 1 },
-  { id: 6, title: "Pay bills", description: "a", completed: true, owner: 1 },
-  { id: 7, title: "Meet George", description: "a", completed: false, owner: 1 },
-  { id: 8, title: "Buy eggs", description: "a", completed: false, owner: 1 },
-  { id: 9, title: "Read a book", description: "a", completed: false, owner: 1 },
+  { id: 5, title: "Hit the gym", completed: false, owner: "bryan" },
+  { id: 6, title: "Pay bills", completed: true, owner: "bryan" },
+  { id: 7, title: "Meet George", completed: false, owner: "bryan" },
+  { id: 8, title: "Buy eggs", completed: false, owner: "bryan" },
+  { id: 9, title: "Read a book", completed: false, owner: "bryan" },
   {
     id: 10,
     title: "Organize office",
@@ -119,8 +120,7 @@ class App extends React.Component {
       })
       .then(res => {
         this.setState({
-          activeUser: res.data,
-          activeUserTodos: res.data.todo_set
+          activeUserTodos: res.data.ptodo_set
         });
         this.generateTodoList();
       })
@@ -163,12 +163,12 @@ class App extends React.Component {
       let title = todo.title;
       let upload = todo.completed
         ? <div onClick={(e) => {
-            this.uploadTodo(i);
+            this.uploadTodo(e, i);
             e.stopPropagation();
           }} className="upload">↑</div>
         : null;
       todoList.push(
-          <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>
+          <li id={i} onClick={() => {this.toggleComplete(i)}} className={className}>
             {title}
             {upload}
             <div onClick={(e) => {
@@ -182,6 +182,7 @@ class App extends React.Component {
     this.setState({
       todoList: todoList
     });
+    console.log("The following todo list was generated:", todoList);
   }
 
   toggleComplete(i) {
@@ -201,7 +202,7 @@ class App extends React.Component {
     console.log("attempting request on", myTodos[i].id, "with", myTodos[i]);
     axios
       .put(
-        `http://localhost:8000/api/todos/${myTodos[i].id}/`,
+        `http://localhost:8000/api/ptodos/${myTodos[i].id}/`,
         {
           title: myTodos[i].title,
           description: myTodos[i].description,
@@ -224,11 +225,12 @@ class App extends React.Component {
   }
 
   addTodo(newData) {
+    console.log("adding", newData);
     let newTodo = {
       title: newData,
-      description: "placeholder",
       completed: false,
-      owner: this.state.activeUser ? this.state.activeUser.id : -1
+      owner: this.state.activeUser ? this.state.activeUser.username : ""
+
     };
 
     // If user isn't logged in
@@ -241,10 +243,11 @@ class App extends React.Component {
       return;
     }
 
-    console.log("You're logged in");
+    console.log("Attempting to post", newTodo);
     axios
-      .post("http://localhost:8000/api/todos/", newTodo)
+      .post("http://localhost:8000/api/ptodos/", newTodo)
       .then(res => {
+        console.log("Todo successfully posted")
         let myTodos = this.state.activeUserTodos;
         myTodos.push(newTodo);
         this.setState({ activeUserTodos: myTodos });
@@ -268,7 +271,7 @@ class App extends React.Component {
     if (this.state.activeUser) {
       console.log("Attempting to delete todo with id:", removedTodo.id);
       axios
-        .delete(`http://localhost:8000/api/todos/${removedTodo.id}/`)
+        .delete(`http://localhost:8000/api/ptodos/${removedTodo.id}/`)
         .then(res => {
           console.log("Successfully deleted todo with id", removedTodo.id);
         })
@@ -276,7 +279,31 @@ class App extends React.Component {
     }
   }
 
-  uploadTodo(i) {
+  uploadTodo(e, i) {
+    console.log(e, i);
+    let myTodo = this.state.activeUserTodos[i];
+    let myPublicTodo = {
+      title: myTodo.title,
+      description: "This is a placeholder",
+      completed: true,
+      owner: this.state.activeUser ? this.state.activeUser.username : "Anonymous",
+      activity_type: "Other"
+    }
+    console.log("Attempting to post", myPublicTodo);
+    axios
+      .post("http://localhost:8000/api/todos/", myPublicTodo)
+      .then(res => {
+        console.log("Todo successfully posted")
+        console.log(res.data);
+        let myData = this.state.data;
+        myData.push(res.data);
+        this.setState({
+          data: myData
+        });
+      })
+      .catch(err => console.log(err));
+    document.getElementById(i).className += " exit-left";
+    setTimeout(() => {this.deleteTodo(i)}, 1000);
 
   }
 
@@ -342,12 +369,13 @@ class App extends React.Component {
               <FeedColor>
                 <SplitButton></SplitButton>
                 <Fade left>
-                  <Feed data={tileData}></Feed>
+                  <Feed className="feed" data={tileData}></Feed>
                 </Fade>
               </FeedColor>
             </Grid>
             <Grid item xs={4}>
               {myList}
+              <Upload/>
               <Switch>
                 <Route
                   expact

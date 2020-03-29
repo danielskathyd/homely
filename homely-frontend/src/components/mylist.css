@@ -106,13 +106,28 @@
     top: 8px;
     border-radius: 15px;
     opacity: 0.6;
-    animation: pulse 1s infinite;
+    animation: pulse-big 1s infinite;
   }
 
   .upload:hover {
     color: white;
     opacity: 1;
     animation: fade 1s ease;
+  }
+
+  .upload-blast-off {
+    position: absolute;
+    font-weight: bold;
+    height: 50%;
+    right: 50px;
+    top: 8px;
+    border-radius: 15px;
+    opacity: 0.6;
+    animation: blast-off 0.4s ease infinite;
+  }
+
+  .exit-left {
+    animation: exit-left 1s ease infinite
   }
 
   @keyframes fade {
@@ -127,8 +142,108 @@
   }
 
   @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1);
+    100% { transform: scale(1); }
+    }
+  }
+
+  @keyframes pulse-big {
     0% { transform: scale(1.2); }
     50% { transform: scale(1.5);
     100% { transform: scale(1.2); }
     }
   }
+
+  @keyframes blast-off {
+    from {
+      transform: translate(0, 0);
+      opacity: 1.0;
+    }
+    to {
+      transform: translate(0, -700px);
+      opacity: 0.0;
+    }
+  }
+
+  @keyframes exit-left {
+    from {
+      transform: translate(0, 0);
+      opacity: 1.0;
+    }
+    to {
+      transform: translate(-200px, 0px);
+      opacity: 0.0;
+    }
+  }
+
+  @keyframes shake{
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.upload-container {
+    background-color: #3b55de;
+    font-family: "Quando", serif;
+    text-align: left;
+    border-radius: 20px 20px 20px 20px;
+    color: #f5e5e5;
+    height: 100vh;
+    width: 30%;
+    position: absolute;
+    top: 30vh;
+    right: 6vw;
+    padding: 18px 0px 0px 28px;
+    box-shadow: -9px 12px 1.5px rgb(0,0,0,0.3);
+    z-index: 2;
+}
+
+.large-login-input {
+  height: 10vh;
+  width: 60%;
+  text-align: left;
+
+}
+
+.upload-btn {
+  background-color: #FCEDE3;
+  box-shadow: 0 5px #E5A1C2;
+  color: #3E3D3B;
+}
+
+.category-bar {
+  height: 40px;
+}
+
+.cat-button {
+  color: #f5e5e5;
+  margin: 5px 8px 5px 8px;
+  cursor: pointer;
+  display: inline;
+}
+
+.cat-button-selected {
+  animation: turn-pink 0.6s ease;
+  margin: 5px 8px 5px 8px;
+  color: #E5A1C2;
+  cursor: pointer;
+  display: inline;
+}
+
+@keyframes turn-pink {
+  from {
+    color: #f5e5e5;
+  }
+  to {
+    color: #E5A1C2;
+  }
+}
