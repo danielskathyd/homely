@@ -9,6 +9,7 @@ class Todo(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to="gallery", default = "gallery/default.jpg") 
+    activity_type = models.CharField(max_length = 20, null = True)
     
     def _str_(self):
         return self.title
