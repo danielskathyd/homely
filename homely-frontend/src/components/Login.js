@@ -29,7 +29,7 @@ export class Login extends React.Component {
             <p className="header">Sign in</p>
             <form onSubmit={this.onSubmit}>
                 <label>Username</label><br></br>
-                <input className="username"size="50"
+                <input className="username login-input"size="50"
                   type="text"
                   name="username"
                   placeholder="johnnyappleseed"
@@ -37,7 +37,7 @@ export class Login extends React.Component {
                   value={this.state.username}
                 ></input><br></br>
                 <label>Password</label><br></br>
-                <input className="password" size="50"
+                <input className="password login-input" size="50"
                   type="password"
                   name="password"
                   placeholder="••••••••••••"

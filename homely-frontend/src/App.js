@@ -19,6 +19,7 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
+import MyList from "./components/MyList";
 
 const Container = styled("div")`
   margin: auto;
@@ -194,6 +195,21 @@ class App extends React.Component {
                 />
               </Switch>
             </Grid>
+          </Grid>
+          <Grid item xs={8}>
+            <FeedColor>
+              <SplitButton></SplitButton>
+              <Feed></Feed>
+            </FeedColor>
+          </Grid>
+          <Grid item xs={4}>
+            {/* <Sticky>
+              <Todo
+                todo_set={this.state.activeUserTodos}
+                addTodo={this.addTodo}></Todo>
+            </Sticky> */}
+            {/* <Login></Login> */}
+            <MyList></MyList>
           </Grid>
         </Router>
       </Container>

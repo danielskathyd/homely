@@ -54,15 +54,15 @@ export class Register extends Component {
                exchange ideas on how we can tackle self isolation together.</p>
             <form onSubmit={this.onSubmit}>
                 <label>Email</label><br></br>
-                <input size="50" type="email" name="email"
+                <input size="50" type="email" name="email" className="login-input"
                   placeholder="johnnyappleseed@gmail.com"
                   onChange={this.onChange} value={this.state.inputs.email}></input><br></br>
                 <label>Username</label><br></br>
-                <input size="50" type="text" name="username"
+                <input size="50" type="text" name="username" className="login-input"
                   placeholder="johnnyappleseed"
                   onChange={this.onChange} value={this.state.inputs.username}></input><br></br>
                 <label>Password</label><br></br>
-                <input size="50" type="password" name="password"
+                <input size="50" type="password" name="password" className="login-input"
                   placeholder="••••••••••••"
                   onChange={this.onChange} value={this.state.inputs.password}></input><br></br>
                 <div className="row">
@@ -71,7 +71,7 @@ export class Register extends Component {
                     'visibility': (this.state.passwordError ? 'visible' : 'hidden')
                   }}>Your passwords do not match!</label>
                 </div><br></br>
-                <input size="50" type="password" name="password2"
+                <input size="50" type="password" name="password2" className="login-input"
                   placeholder="••••••••••••"
                   onChange={this.onChange} value={this.state.inputs.password2}></input><br></br>
                 <button class="styled-button">Connect</button>

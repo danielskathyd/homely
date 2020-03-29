@@ -19,7 +19,7 @@ form {
     padding: 10px 0px;
 }
 
-input {
+.login-input {
     border-radius: 20px;
     border: none;
     opacity: 75%;
