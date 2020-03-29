@@ -9,6 +9,8 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import InfoIcon from "@material-ui/icons/Info";
 import styled from "styled-components";
 import ModalImage from "react-modal-image";
+import Fade from "react-reveal/Fade";
+
 import "./feed.css";
 
 const useStyles = makeStyles(theme => ({
@@ -42,11 +44,13 @@ const TitlebarGridList = props => {
       >
         {props.data.map((tile, index) => (
           <GridListTile key={props.data[index].id} cols={props.cols || 1}>
-            <ModalImage
-              small={props.data[index].image}
-              large={props.data[index].image}
-              alt={props.data[index].title}
-            />
+            <Fade bottom>
+              <ModalImage
+                small={props.data[index].image}
+                large={props.data[index].image}
+                alt={props.data[index].title}
+              />
+            </Fade>
             <GridListTileBar
               title={props.data[index].title}
               subtitle={<span>by: {props.data[index].owner}</span>}
