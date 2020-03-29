@@ -19,7 +19,9 @@ export class Upload extends Component {
         activity_type: ''
       },
       selectedCategory: -1
-    }
+    };
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   handleCatButton(e, i) {
@@ -40,23 +42,39 @@ export class Upload extends Component {
     });
   }
 
-  onChange = e => {
+  onChange(e) {
     let myInputs = this.state.inputs;
     myInputs[e.target.name] = e.target.value;
     this.setState({ inputs: myInputs });
+  }
+
+  fileUploadHandler() {
+  }
+
+  onSubmit() {
+    this.props.onSubmit(this.state)
+    this.setState({
+      inputs: {
+        title: '',
+        description: '',
+        completed: true,
+        owner: '',
+        image: null,
+        activity_type: ''
+      },
+    })
   }
 
   render() {
     let errorText = this.state.registerError ? "Error: invalid input!" : "";
     if(this.props.activeUser) return null;
     return(
-        <div className="upload-container">
+        <div class="upload-container">
             <p className="log-header">Full Send.</p>
             <p className="body">It's time to share the small (or big) successes!</p>
             <form onSubmit={this.onSubmit}>
                 <label>Title</label><br></br>
                 <input size="50" type="text" name="title" className="login-input"
-                  placeholder="johnnyappleseed@gmail.com"
                   onChange={this.onChange} defaultValue={this.props.title}></input><br></br>
                 <label>Picture/Video</label><br></br>
                 <input type="file" onChange={this.fileSelectedHandler} name="image"

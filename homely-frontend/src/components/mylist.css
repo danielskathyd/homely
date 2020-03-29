@@ -192,19 +192,23 @@
 }
 
 .upload-container {
-    background-color: #3b55de;
-    font-family: "Quando", serif;
-    text-align: left;
-    border-radius: 20px 20px 20px 20px;
-    color: #f5e5e5;
-    height: 100vh;
-    width: 30%;
-    position: absolute;
-    top: 30vh;
-    right: 6vw;
-    padding: 18px 0px 0px 28px;
-    box-shadow: -9px 12px 1.5px rgb(0,0,0,0.3);
-    z-index: 2;
+  background-color: #3b55de;
+  font-family: "Quando", serif;
+  text-align: left;
+  border-radius: 20px 20px 20px 20px;
+  color: #f5e5e5;
+  height: 100vh;
+  width: 30%;
+  position: absolute;
+  right: 6vw;
+  padding: 18px 0px 0px 28px;
+  box-shadow: -9px 12px 1.5px rgb(0,0,0,0.3);
+  z-index: 2;
+  top: 30vh;
+}
+
+.login-input {
+  width: 60%;
 }
 
 .large-login-input {
@@ -218,6 +222,7 @@
   background-color: #FCEDE3;
   box-shadow: 0 5px #E5A1C2;
   color: #3E3D3B;
+  width: 60%;
 }
 
 .category-bar {

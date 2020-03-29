@@ -82,7 +82,8 @@ class App extends React.Component {
       loggingIn: false,
       todoList: [],
       isFetchingData: false,
-      data: null
+      data: null,
+      sharedTodoTitle: null
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
@@ -100,7 +101,7 @@ class App extends React.Component {
         console.log("hello");
         this.setState({
           isFetchingData: false,
-          data: res.data
+          data: res.data.reverse()
         });
       })
       .catch(err => console.log(err));
@@ -154,6 +155,21 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
 
+  handleUploadButton(e, i) {
+    console.log(this.state.activeUserTodos);
+    let todo = this.state.activeUserTodos[i];
+    console.log("SHARED TODO NAME");
+    console.log(todo.title);
+    document.getElementById(i).className += " exit-left";
+    setTimeout(() => {
+      this.deleteTodo(i);
+      this.setState({
+        sharedTodoTitle: todo.title
+      });
+    }, 2000);
+  }
+
+
   generateTodoList() {
     if (!this.state.activeUserTodos) return;
     var todoList = [];
@@ -163,7 +179,7 @@ class App extends React.Component {
       let title = todo.title;
       let upload = todo.completed
         ? <div onClick={(e) => {
-            this.uploadTodo(e, i);
+            this.handleUploadButton(e, i);
             e.stopPropagation();
           }} className="upload">↑</div>
         : null;
@@ -279,15 +295,33 @@ class App extends React.Component {
     }
   }
 
-  uploadTodo(e, i) {
-    console.log(e, i);
-    let myTodo = this.state.activeUserTodos[i];
+  uploadTodo(state) {
+    console.log(state);
+    let myCategory;
+    switch(state.selectedCategory) {
+      case 1:
+        myCategory = "food";
+        break;
+      case 2:
+        myCategory = "art";
+        break;
+      case 3:
+        myCategory = "gaming";
+        break;
+      case 4:
+        myCategory = "fitness";
+        break;
+      case 5:
+        myCategory = "hobby";
+        break;
+    }
+    let myTodo = state.inputs;
     let myPublicTodo = {
       title: myTodo.title,
-      description: "This is a placeholder",
+      description: myTodo.description,
       completed: true,
       owner: this.state.activeUser ? this.state.activeUser.username : "Anonymous",
-      activity_type: "Other"
+      activity_type: myCategory
     }
     console.log("Attempting to post", myPublicTodo);
     axios
@@ -298,13 +332,11 @@ class App extends React.Component {
         let myData = this.state.data;
         myData.push(res.data);
         this.setState({
-          data: myData
+          data: myData,
+          sharedTodoTitle: null
         });
       })
       .catch(err => console.log(err));
-    document.getElementById(i).className += " exit-left";
-    setTimeout(() => {this.deleteTodo(i)}, 1000);
-
   }
 
   render() {
@@ -344,6 +376,10 @@ class App extends React.Component {
     }
 
     let tileData = this.state.data;
+    console.log(this.state.sharedTodoTitle);
+    let upload = this.state.sharedTodoTitle
+      ? <Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/> : null;
+    console.log("UPLOAD STATE:", upload)
     console.log(tileData);
     return (
       <Container>
@@ -375,7 +411,7 @@ class App extends React.Component {
             </Grid>
             <Grid item xs={4}>
               {myList}
-              <Upload/>
+              {upload}
               <Switch>
                 <Route
                   expact
