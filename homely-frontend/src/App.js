@@ -55,14 +55,24 @@ const Sticky = styled("div")`
   top: 0;
 `;
 
+const exampleTodos = [
+  {"id": 5, "title": "Hit the gym", "description": "a", "completed": false, "owner": 1},
+  {"id": 6, "title": "Pay bills", "description": "a", "completed": true, "owner": 1},
+  {"id": 7, "title": "Meet George", "description": "a", "completed": false, "owner": 1},
+  {"id": 8, "title": "Buy eggs", "description": "a", "completed": false, "owner": 1},
+  {"id": 9, "title": "Read a book", "description": "a", "completed": false, "owner": 1},
+  {"id": 10, "title": "Organize office", "description": "a", "completed": false, "owner": 1}
+]
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: [],
+      activeUserTodos: exampleTodos,
       loggingIn: false,
+      todoList: [],
       isFetchingData: false,
       data: null
     };
@@ -71,6 +81,21 @@ class App extends React.Component {
     this.generateTodoList = this.generateTodoList.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    this.generateTodoList();
+    this.setState({ isFetchingData: true });
+    axios
+      .get("http://localhost:8000/api/todos")
+      .then(res => {
+        console.log("hello");
+        this.setState({
+          isFetchingData: false,
+          data: res.data
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   fetchUserInfo() {
@@ -90,6 +115,7 @@ class App extends React.Component {
           activeUser: res.data,
           activeUserTodos: res.data.todo_set
         });
+        this.generateTodoList();
       })
       .catch(err => console.log(err));
   }
@@ -114,27 +140,69 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: []
+          activeUserTodos: exampleTodos
         });
+        this.generateTodoList();
       })
       .catch(err => console.log(err));
   }
 
   generateTodoList() {
     if (!this.state.activeUserTodos) return;
-    let myData = [];
-    for (let todo of this.state.activeUserTodos) {
-      myData.push({
-        name: todo.title
-        // completed: todo.completed,
-      });
+    var todoList = []
+    for(let i = 0; i < this.state.activeUserTodos.length; i++) {
+      let todo = this.state.activeUserTodos[i];
+      let className = todo.completed ? "checked" : "";
+      let title = todo.title;
+      todoList.push(
+        <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>{title}</li>
+      );
     }
-    return myData;
+    this.setState({
+      todoList: todoList
+    });
+  }
+
+  toggleComplete(i) {
+    if (this.state.activeUserTodos.length <= i) return;
+    let myTodos = this.state.activeUserTodos;
+    myTodos[i].completed = !myTodos[i].completed;
+
+    // not logged in
+    if(!this.state.activeUser) {
+      console.log("Not logged in");
+      this.setState({
+        activeUserTodos: myTodos
+      })
+      this.generateTodoList();
+      return;
+    }
+    console.log("attempting request on", myTodos[i].id, "with", myTodos[i]);
+    axios
+      .put(`http://localhost:8000/api/todos/${myTodos[i].id}/`,
+      {
+  	      "title": myTodos[i].title,
+  	      "description": myTodos[i].description,
+  	      "completed": myTodos[i].completed,
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => {
+        console.log("successfully wrote");
+        this.setState({
+          activeUserTodos: myTodos
+        })
+        this.generateTodoList();
+      })
+      .catch(err => console.log(err));
   }
 
   addTodo(newData) {
     let newTodo = {
       title: newData,
+      description: "placeholder",
       completed: false,
       owner: this.state.activeUser ? this.state.activeUser.id : -1
     };
@@ -144,8 +212,9 @@ class App extends React.Component {
       let myTodos = this.state.activeUserTodos;
       myTodos.push(newTodo);
       this.setState({ activeUserTodos: myTodos });
+      this.generateTodoList();
       console.log("User isnt logged in");
-      return true;
+      return;
     }
 
     console.log("You're logged in");
@@ -155,25 +224,14 @@ class App extends React.Component {
         let myTodos = this.state.activeUserTodos;
         myTodos.push(newTodo);
         this.setState({ activeUserTodos: myTodos });
-        console.log(myTodos);
-        return true;
+        this.fetchUserInfo();
+        // console.log(myTodos);
+        return;
       })
       .catch(err => console.log(err));
-    return false;
+    return;
   }
-  componentDidMount() {
-    this.setState({ isFetchingData: true });
-    axios
-      .get("http://localhost:8000/api/todos")
-      .then(res => {
-        console.log("hello");
-        this.setState({
-          isFetchingData: false,
-          data: res.data
-        });
-      })
-      .catch(err => console.log(err));
-  }
+
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -183,7 +241,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.loggingIn);
+    console.log(this.state.activeUser);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -207,7 +265,7 @@ class App extends React.Component {
       ? "welcome " + activeUserName + "!"
       : "";
     let myList = this.state.loggingIn ? null : (
-      <MyList todos={this.state.activeUserTodos}></MyList>
+      <MyList onSubmit={this.addTodo} todos={this.state.todoList}></MyList>
     );
 
     if (this.state.isFetchingData || !this.state.data) {
