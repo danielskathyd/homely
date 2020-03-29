@@ -10,49 +10,49 @@ import rice from "../images/rice.png";
 const tileData = [
   {
     img: avocado_toast,
-    title: "Image",
+    title: "Avocado Toast",
     author: "author",
     featured: true
   },
   {
     img: banana,
-    title: "Image",
+    title: "Banan",
     author: "author",
     featured: true
   },
   {
     img: capoo,
-    title: "Image",
+    title: "Capoo",
     author: "author",
     featured: true
   },
   {
     img: cappin,
-    title: "Image",
+    title: "Cappin",
     author: "author",
     featured: true
   },
   {
     img: cookies,
-    title: "Image",
+    title: "Cookies",
     author: "author",
     featured: true
   },
   {
     img: cooking,
-    title: "Image",
+    title: "Cooking",
     author: "author",
     featured: true
   },
   {
     img: pushup,
-    title: "Image",
+    title: "Pushup",
     author: "author",
     featured: true
   },
   {
     img: rice,
-    title: "Image",
+    title: "Rice",
     author: "author",
     featured: true
   }

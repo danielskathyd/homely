@@ -10,7 +10,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import Todo from "./components/Todo";
+import { Todo } from "./components/Todo";
 import SplitButton from "./components/SplitButton";
 import Feed from "./components/Feed";
 // import { Register } from "./components/Accounts/Register";
@@ -37,7 +37,7 @@ const FeedColor = styled("div")`
 `;
 
 const Sticky = styled("div")`
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
 `;
@@ -51,25 +51,62 @@ class App extends React.Component {
       activeUserTodos: null
     };
     this.setToken = this.setToken.bind(this);
+    this.fetchUserInfo = this.fetchUserInfo.bind(this);
+    this.generateTodoList = this.generateTodoList.bind(this);
+    this.handleLogout = this.handleLogout.bind(this)
   }
-  componentDidMount() {
+
+  fetchUserInfo() {
+    console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
+    axios
+      .get("http://localhost:8000/api/auth/user", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${this.state.activeUserToken}`
+        }
+      })
+      .then(res => {
+        this.setState({
+        activeUser: res.data,
+        activeUserTodos: res.data.todo_set
+        })
+      })
+      .catch(err => console.log(err));
+  }
+  setToken(userToken) {
+    this.setState({ activeUserToken: userToken});
     this.fetchUserInfo();
   }
-  // Right now, you're always me
-  fetchUserInfo() {
+  handleLogout() {
+    if(!this.state.activeUserToken) return;
+    console.log("Attemping to log out user using: ", `Token ${this.state.activeUserToken}`)
     axios
-      .get("http://localhost:8000/api/users/")
-      .then(res =>
+      .post("http://localhost:8000/api/auth/logout", null, {
+        headers: {
+          'Authorization': `Token ${this.state.activeUserToken}`
+        }
+      })
+      .then(res => {
+        console.log(res);
         this.setState({
-          activeUser: res.data[0],
-          activeUserTodos: res.data[0]["todo_set"]
+          activeUserToken: null,
+          activeUser: null,
+          activeUserTodos: null,
         })
-      )
+      })
       .catch(err => console.log(err));
   }
 
-  setToken(userToken) {
-    this.setState({ activeUserToken: userToken});
+  generateTodoList() {
+    if(!this.state.activeUserTodos) return;
+    let myData = [];
+    for(let todo of this.state.activeUserTodos) {
+      myData.push({
+        name: todo.title,
+        // completed: todo.completed,
+      });
+    }
+    return myData;
   }
 
   renderTodos() {
@@ -81,7 +118,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUserToken);
+    console.log(this.state.activeUserTodos);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -90,17 +127,25 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route
-              expact path="/register"
-              render={(props) => <Register {...props} setToken={this.setToken} />}
+              expact
+              path="/register"
+              render={props => <Register {...props} setToken={this.setToken} />}
             />
-            <Route expact path="/login" render={(props) => <Login {...props} setToken={this.setToken} />}/>
+            <Route
+              expact
+              path="/login"
+              render={props => <Login {...props} setToken={this.setToken} />}
+            />
           </Switch>
           <LoginButton />
         </Router>
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Header>homely</Header>
+            <Header>
+              homely: welcome {activeUserName}
+              <button onClick={this.handleLogout}>Logout</button>
+            </Header>
           </Grid>
           <Grid item xs={8}>
             <FeedColor>
@@ -109,10 +154,9 @@ class App extends React.Component {
             </FeedColor>
           </Grid>
           <Grid item xs={4}>
-            {/* <Sticky>
-              <Todo></Todo>
-            </Sticky> */}
-            <Register></Register>
+            <Sticky>
+              <Todo todo_set={this.generateTodoList()}></Todo>
+            </Sticky>
           </Grid>
         </Grid>
       </Container>
