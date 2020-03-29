@@ -16,8 +16,8 @@ import Feed from "./components/Feed";
 // import { Register } from "./components/Accounts/Register";
 // import { Login } from "./components/Accounts/Login";
 import { LoginButton } from "./components/LoginButton";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import { Register } from "./components/Register";
+import { Login } from "./components/Login";
 
 const Container = styled("div")`
   margin: auto;
@@ -150,50 +150,52 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUserTodos);
+    console.log(this.state.activeUser);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
     return (
       <Container>
         <Router>
-          <Switch>
-            <Route
-              expact
-              path="/register"
-              render={props => <Register {...props} setToken={this.setToken} />}
-            />
-            <Route
-              expact
-              path="/login"
-              render={props => <Login {...props} setToken={this.setToken} />}
-            />
-          </Switch>
-          <LoginButton />
-        </Router>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Header>
-              homely: welcome {activeUserName}
-              <button onClick={this.handleLogout}>Logout</button>
-            </Header>
+          <LoginButton />
+
+
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Header>
+                homely: welcome {activeUserName}
+                <button onClick={this.handleLogout}>Logout</button>
+              </Header>
+            </Grid>
+            <Grid item xs={8}>
+              <FeedColor>
+                <SplitButton></SplitButton>
+                <Feed></Feed>
+              </FeedColor>
+            </Grid>
+            <Grid item xs={4}>
+              {/* <Sticky>
+                <Todo
+                  todo_set={this.state.activeUserTodos}
+                  addTodo={this.addTodo}></Todo>
+              </Sticky> */}
+              <Switch>
+                <Route
+                  expact path="/register"
+                  render={props => <Register {...props} setToken={this.setToken}
+                  activeUser={this.state.activeUser} />}
+                />
+                <Route
+                  expact
+                  path="/login"
+                  render={props => <Login {...props} setToken={this.setToken}
+                  activeUser={this.state.activeUser} />}
+                />
+              </Switch>
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <FeedColor>
-              <SplitButton></SplitButton>
-              <Feed></Feed>
-            </FeedColor>
-          </Grid>
-          <Grid item xs={4}>
-            <Sticky>
-              <Todo
-                todo_set={this.state.activeUserTodos}
-                addTodo={this.addTodo}></Todo>
-            </Sticky>
-            {/* <Login></Login> */}
-          </Grid>
-        </Grid>
+        </Router>
       </Container>
     );
   }

@@ -1,7 +1,49 @@
 import React, { Component } from 'react';
-import "./register.css"
+import "./register.css";
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
-export default function Register() {
+export class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputs: {
+        username: '',
+        email: '',
+        first_name: '',
+        last_name: '',
+        password: '',
+        password2: ''
+      },
+      passwordError: false,
+    }
+  }
+
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(e.target.getElementsByClassName('password-match-error')[0]);
+    if(this.state.inputs.password !== this.state.inputs.password2) {
+      this.setState({ passwordError: true });
+      return;
+    }
+    axios
+      .post('http://localhost:8000/api/auth/register', this.state.inputs)
+      .then(res => {
+        let userToken = res.data.token;
+        this.setState({ hidden: true });
+        this.props.setToken(userToken);
+      })
+      .catch(err => console.log(err));
+  }
+
+  onChange = e => {
+    let myInputs = this.state.inputs;
+    myInputs[e.target.name] = e.target.value;
+    this.setState({ inputs: myInputs });
+  }
+
+  render() {
+    if(this.props.activeUser) return null;
     return(
         <div className="container">
             <p className="header">Create an account</p>
@@ -10,17 +52,31 @@ export default function Register() {
                and share your successes with those around you. </p>
             <p className="body">Create an account to connect with others and
                exchange ideas on how we can tackle self isolation together.</p>
-            <form>
+            <form onSubmit={this.onSubmit}>
                 <label>Email</label><br></br>
-                <input size="50" type="text" placeholder="johnnyappleseed@gmail.com"></input><br></br>
+                <input size="50" type="email" name="email"
+                  placeholder="johnnyappleseed@gmail.com"
+                  onChange={this.onChange} value={this.state.inputs.email}></input><br></br>
                 <label>Username</label><br></br>
-                <input size="50" type="text" placeholder="johnnyappleseed"></input><br></br>
+                <input size="50" type="text" name="username"
+                  placeholder="johnnyappleseed"
+                  onChange={this.onChange} value={this.state.inputs.username}></input><br></br>
                 <label>Password</label><br></br>
-                <input size="50" type="text" placeholder="••••••••••••"></input><br></br>
-                <label>Verify Password</label><br></br>
-                <input size="50" type="text" placeholder="••••••••••••"></input>
+                <input size="50" type="password" name="password"
+                  placeholder="••••••••••••"
+                  onChange={this.onChange} value={this.state.inputs.password}></input><br></br>
+                <div className="row">
+                  <label>Verify Password</label>
+                  <label className="password-match-error" style={{
+                    'visibility': (this.state.passwordError ? 'visible' : 'hidden')
+                  }}>Your passwords do not match!</label>
+                </div><br></br>
+                <input size="50" type="password" name="password2"
+                  placeholder="••••••••••••"
+                  onChange={this.onChange} value={this.state.inputs.password2}></input><br></br>
+                <button class="styled-button">Connect</button>
             </form>
-            <button class="styled-button">Connect</button>
         </div>
     );
+  }
 }

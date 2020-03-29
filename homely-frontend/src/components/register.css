@@ -31,6 +31,16 @@ label {
     font-size: 12px;
 }
 
+.row {
+    white-space: nowrap;
+    margin-bottom: -18px;
+}
+
+.row > label, .row > p {
+    display: inline-block;
+    margin: 0px 10px 0px 0px;
+}
+
 .styled-button {
     background-color: #3B55DE;
     font-family: "Quando", serif;
@@ -40,11 +50,13 @@ label {
     padding: 7px 10px;
     margin: 10px 0px;
     box-shadow: 0 5px #28357B;
+    cursor: pointer;
 }
 
 .styled-button:active {
     box-shadow: 0 1px #666;
     transform: translateY(4px);
+    cursor: pointer;
   }
 
 .forgot-password {
@@ -52,4 +64,8 @@ label {
     font-size: 10px;
     color: #3B55DE;
     text-decoration: underline;
+}
+
+.password-match-error {
+  color: red;
 }
