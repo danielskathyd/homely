@@ -7,7 +7,7 @@
     height: 100vh;
     margin-top: 10px;
     padding: 0px;
-    box-shadow: -13px 13px 5px rgb(0,0,0,0.3);
+    box-shadow: -9px 12px 1.5px rgb(0,0,0,0.3);
 }
 
 .todo-header {
@@ -98,6 +98,23 @@
     animation: fade 1s ease;
   }
 
+  .upload {
+    position: absolute;
+    font-weight: bold;
+    height: 50%;
+    right: 50px;
+    top: 8px;
+    border-radius: 15px;
+    opacity: 0.6;
+    animation: pulse 1s infinite;
+  }
+
+  .upload:hover {
+    color: white;
+    opacity: 1;
+    animation: fade 1s ease;
+  }
+
   @keyframes fade {
     from {
       color: #3E3D3B;
@@ -106,5 +123,12 @@
     to {
       color: white;
       opacity: 1;
+    }
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1.2); }
+    50% { transform: scale(1.5);
+    100% { transform: scale(1.2); }
     }
   }

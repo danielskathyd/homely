@@ -154,9 +154,17 @@ class App extends React.Component {
       let todo = this.state.activeUserTodos[i];
       let className = todo.completed ? "checked" : "";
       let title = todo.title;
+      let upload = todo.completed
+        ? <div onClick={(e) => {
+            this.uploadTodo(i);
+            e.stopPropagation();
+          }} className="upload">↑</div>
+        : null;
       todoList.push(
           <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>
-            {title}<div onClick={(e) => {
+            {title}
+            {upload}
+            <div onClick={(e) => {
               this.deleteTodo(i);
               e.stopPropagation();
             }} className="close">X</div>
@@ -254,6 +262,10 @@ class App extends React.Component {
         .then(res => {console.log("Successfully deleted todo with id", removedTodo.id)})
         .catch(err => console.log(err))
     }
+  }
+
+  uploadTodo(i) {
+    
   }
 
   render() {

@@ -26,6 +26,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'homely')
 router.register(r'todos', views.TodoView, 'homely')
+router.register(r'ptodos', views.PersonalTodoView, 'homely')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
