@@ -13,9 +13,11 @@ import axios from "axios";
 import { Todo } from "./components/Todo";
 import SplitButton from "./components/SplitButton";
 import Feed from "./components/Feed";
-import { Register } from "./components/Accounts/Register";
-import { Login } from "./components/Accounts/Login";
+// import { Register } from "./components/Accounts/Register";
+// import { Login } from "./components/Accounts/Login";
 import { LoginButton } from "./components/LoginButton";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 const Container = styled("div")`
   margin: auto;
@@ -189,6 +191,7 @@ class App extends React.Component {
                 todo_set={this.state.activeUserTodos}
                 addTodo={this.addTodo}></Todo>
             </Sticky>
+            {/* <Login></Login> */}
           </Grid>
         </Grid>
       </Container>
