@@ -39,7 +39,7 @@
   }
 }
 
-button {
+.log-button {
     background-color: #FCEDE3;
     font-family: "Quando", serif;
     border-radius: 10px;
@@ -49,10 +49,10 @@ button {
     margin: 10px 0px;
     box-shadow: 0 5px #E5A1C2;
     cursor: pointer;
-    margin: -20px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
-button:active {
+.log-button:active {
     box-shadow: 0 1px #666;
     transform: translateY(4px);
     cursor: pointer;
@@ -61,4 +61,10 @@ button:active {
 .log-button {
   display: inline-block;
   float: right;
+}
+
+.user-greeting {
+  display: inline-block;
+  float: right;
+  margin: 8px 8px;
 }

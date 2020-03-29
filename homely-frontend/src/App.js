@@ -157,16 +157,24 @@ class App extends React.Component {
       ? this.state.activeUser.username
       : "";
     let logButton = this.state.activeUser
-      ? <Link to="/"><button onClick={this.handleLogout}>Logout</button></Link>
-      : (<Link to="/login"><button>Login</button></Link>)
+      ? (<Link to="/">
+        <button className="log-button" onClick={this.handleLogout}>Logout</button>
+      </Link>)
+      : (<Link to="/login">
+        <button className="log-button">Login</button>
+      </Link>)
+    let userGreeting = this.state.activeUser
+      ? "welcome " + activeUserName + "!"
+      : ""
     return (
       <Container>
         <Router>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Header>
-                homely: welcome {activeUserName}
-                <div className="log-button">{logButton}</div>
+                homely
+                {logButton}
+                <div className="user-greeting">{userGreeting}</div>
               </Header>
             </Grid>
             <Grid item xs={8}>
@@ -208,8 +216,8 @@ class App extends React.Component {
                 todo_set={this.state.activeUserTodos}
                 addTodo={this.addTodo}></Todo>
             </Sticky> */}
-            <Login></Login>
-            {/* <MyList></MyList> */}
+            {/* <Login></Login> */}
+            <MyList></MyList>
           </Grid>
         </Router>
       </Container>
