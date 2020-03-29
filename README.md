@@ -27,7 +27,7 @@ The next step of this project would be a live deployment of the application usin
 ## Build Instructions
 If you'd like to try homely yourself, here are the steps to build it:
 
-# Backend
+### Backend
 Navigate to `homely-backend/backend` as it contains `manage.py`, the script used to run our local Django server. Make sure pipenv and python3 are installed:
 
 ```
@@ -74,3 +74,15 @@ Header:
 And lastly:
 * Logout: http://localhost:8000/api/auth/logout
 (This invalidates the token)
+
+### Frontend
+Navigate to homely-frontend and run:
+```
+npm install
+```
+This could take a while, as my team members can attest to :)
+After this install is complete, run:
+```
+npm start
+```
+And the website should be good to go at http://localhost:3000/. Hope you enjoyed our project, we had a lot of fun making it!
