@@ -20,6 +20,14 @@ import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import MyList  from "./components/MyList";
 import Logo from "./images/logo.png";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import InfoIcon from '@material-ui/icons/Info';
+import ModalImage from "react-modal-image";
 
 const Container = styled("div")`
   margin: auto;
@@ -54,7 +62,9 @@ class App extends React.Component {
       activeUserToken: null,
       activeUser: null,
       activeUserTodos: [],
-      loggingIn: false
+      loggingIn: false,
+      isFetchingData: false,
+      data: null
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
@@ -151,7 +161,20 @@ class App extends React.Component {
       .catch(err => console.log(err));
     return false;
   }
+  componentDidMount () {
+      this.setState({ isFetchingData: true });
+      axios
+        .get("http://localhost:8000/api/todos")
+        .then(res => {
+          console.log("hello")
+          this.setState({
+            isFetchingData: false,
+            data: res.data
+          });
 
+        })
+        .catch(err => console.log(err));
+    }
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -180,6 +203,13 @@ class App extends React.Component {
       ? "welcome " + activeUserName + "!"
       : "";
     let myList = this.state.loggingIn ? null : <MyList todos={this.state.activeUserTodos}></MyList>;
+
+    if (this.state.isFetchingData || !this.state.data) {
+      return <p></p>;
+    }
+
+    let tileData = this.state.data
+
     return (
         <Container>
           <Router>
@@ -201,7 +231,29 @@ class App extends React.Component {
               <Grid item xs={8}>
                 <FeedColor>
                   <SplitButton></SplitButton>
-                  <Feed></Feed>
+                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
+                      <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
+                        {tileData.map(tile => (
+                          <GridListTile key={tile.id}>
+                            <ModalImage small={tile.image} large={tile.image} alt={tile.title} />
+                            {/* <img src={tile.image} alt={tile.title} /> */}
+                            <GridListTileBar
+                              title={tile.title}
+                              subtitle={<span>by: {tile.owner}</span>}
+                              actionIcon={
+                                <IconButton
+                                  aria-label={`star ${tile.title}`}
+                                  style = {{color: 'rgba(255, 255, 255, 0.54)'}}
+                                >
+                                  <StarBorderIcon />
+                                </IconButton>
+                              }
+                              actionPosition="right"
+                            />
+                          </GridListTile>
+                        ))}
+                      </GridList>
+                    </div>
                 </FeedColor>
               </Grid>
               <Grid item xs={4}>
