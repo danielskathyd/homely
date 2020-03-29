@@ -280,7 +280,8 @@ class App extends React.Component {
       ? "welcome " + activeUserName + "!"
       : "";
     let myList = this.state.loggingIn ? null : (
-      <MyList onSubmit={this.addTodo} todos={this.state.todoList}></MyList>
+      <MyList onSubmit={this.addTodo}
+        todos={this.state.todoList} user={this.state.activeUser}></MyList>
     );
 
     if (this.state.isFetchingData || !this.state.data) {

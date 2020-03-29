@@ -5,6 +5,8 @@
     text-align: left;
     border-radius: 20px 0px 0px 20px;
     color: #3E3D3B;
+    margin-top: 20px;
+    box-shadow: -13px 13px 5px rgb(0,0,0,0.3);
 }
 
 .log-header {
@@ -58,6 +60,14 @@ label {
     transform: translateY(4px);
     cursor: pointer;
   }
+
+.styled-button:hover {
+
+}
+
+@keyframe wiggle {
+  0% { transform: rotate(0) }  
+}
 
 .forgot-this.state.inputsd {
     margin: 0px;
