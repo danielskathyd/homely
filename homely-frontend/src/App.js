@@ -306,7 +306,8 @@ class App extends React.Component {
                 >
                   <GridList
                     cellHeight={180}
-                    spacing={15}
+                    spacing={10}
+                    cols={3}
                     style={{
                       width: 1000,
                       height: 580,
@@ -318,7 +319,7 @@ class App extends React.Component {
                         <ModalImage
                           small={tile.image}
                           large={tile.image}
-                          alt={tile.title}
+                          alt={tile.description}
                         />
                         {/* <img src={tile.image} alt={tile.title} /> */}
                         <GridListTileBar
