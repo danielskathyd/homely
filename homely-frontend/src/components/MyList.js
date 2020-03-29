@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import "./mylist.css"
+import axios from "axios"
 
-export default function Register() {
+export class MyList extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return(
         <div className="list-container">
             <div className="header">
@@ -19,4 +25,5 @@ export default function Register() {
             </ul>
         </div>
     );
+  }
 }
