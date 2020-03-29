@@ -8,7 +8,7 @@ class Todo(models.Model):
     completed = models.BooleanField(default=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to="gallery", null=True) 
+    image = models.ImageField(upload_to="gallery", default = "gallery/default.jpg") 
     
     def _str_(self):
         return self.title
