@@ -36,7 +36,9 @@ const Header = styled("div")`
 `;
 
 const FeedColor = styled("div")`
-  background: #f2c0d8;
+  background: #EDCADB;
+  padding: 40px;
+  margin: 0px 40px 0px 70px;
 `;
 
 const Sticky = styled("div")`
