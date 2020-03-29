@@ -25,7 +25,7 @@ export class Login extends React.Component {
   render() {
     if(this.props.activeUser) return null;;
     return(
-        <div className="container">
+        <div className="login-container">
             <p className="header">Sign in</p>
             <form onSubmit={this.onSubmit}>
                 <label>Username</label><br></br>
@@ -43,11 +43,11 @@ export class Login extends React.Component {
                   placeholder="••••••••••••"
                   onChange={this.onChange}
                   value={this.state.password}></input><br></br>
-                <p class="forgot-password">Forgot password?</p>
-                <button class="styled-button" type="submit">Connect</button><br></br>
+                <p className="forgot-password">Forgot password?</p>
+                <button className="styled-button" type="submit">Connect</button><br></br>
             </form>
             <Link to="/register">
-              <button class="styled-button">I don't have an account</button>
+              <button className="styled-button">I don't have an account</button>
             </Link>
         </div>
     );
