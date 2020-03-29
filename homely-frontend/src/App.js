@@ -51,43 +51,49 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: [],
+      activeUserTodos: []
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
     this.generateTodoList = this.generateTodoList.bind(this);
     this.addTodo = this.addTodo.bind(this);
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   fetchUserInfo() {
-    console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
+    console.log(
+      "Attemping to fetch user info using: ",
+      `Token ${this.state.activeUserToken}`
+    );
     axios
       .get("http://localhost:8000/api/auth/user", {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.state.activeUserToken}`
+          "Content-Type": "application/json",
+          Authorization: `Token ${this.state.activeUserToken}`
         }
       })
       .then(res => {
         this.setState({
-        activeUser: res.data,
-        activeUserTodos: res.data.todo_set
-        })
+          activeUser: res.data,
+          activeUserTodos: res.data.todo_set
+        });
       })
       .catch(err => console.log(err));
   }
   setToken(userToken) {
-    this.setState({ activeUserToken: userToken});
+    this.setState({ activeUserToken: userToken });
     this.fetchUserInfo();
   }
   handleLogout() {
-    if(!this.state.activeUserToken) return;
-    console.log("Attemping to log out user using: ", `Token ${this.state.activeUserToken}`)
+    if (!this.state.activeUserToken) return;
+    console.log(
+      "Attemping to log out user using: ",
+      `Token ${this.state.activeUserToken}`
+    );
     axios
       .post("http://localhost:8000/api/auth/logout", null, {
         headers: {
-          'Authorization': `Token ${this.state.activeUserToken}`
+          Authorization: `Token ${this.state.activeUserToken}`
         }
       })
       .then(res => {
@@ -95,18 +101,18 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: [],
+          activeUserTodos: []
         });
       })
       .catch(err => console.log(err));
   }
 
   generateTodoList() {
-    if(!this.state.activeUserTodos) return;
+    if (!this.state.activeUserTodos) return;
     let myData = [];
-    for(let todo of this.state.activeUserTodos) {
+    for (let todo of this.state.activeUserTodos) {
       myData.push({
-        name: todo.title,
+        name: todo.title
         // completed: todo.completed,
       });
     }
@@ -121,11 +127,11 @@ class App extends React.Component {
     };
 
     // If user isn't logged in
-    if(!this.state.activeUser) {
+    if (!this.state.activeUser) {
       let myTodos = this.state.activeUserTodos;
       myTodos.push(newTodo);
-      this.setState({activeUserTodos: myTodos});
-      console.log("User isnt logged in")
+      this.setState({ activeUserTodos: myTodos });
+      console.log("User isnt logged in");
       return true;
     }
 
@@ -135,7 +141,7 @@ class App extends React.Component {
       .then(res => {
         let myTodos = this.state.activeUserTodos;
         myTodos.push(newTodo);
-        this.setState({activeUserTodos: myTodos});
+        this.setState({ activeUserTodos: myTodos });
         console.log(myTodos);
         return true;
       })
@@ -156,16 +162,20 @@ class App extends React.Component {
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
-    let logButton = this.state.activeUser
-      ? (<Link to="/">
-        <button className="log-button" onClick={this.handleLogout}>Logout</button>
-      </Link>)
-      : (<Link to="/login">
+    let logButton = this.state.activeUser ? (
+      <Link to="/">
+        <button className="log-button" onClick={this.handleLogout}>
+          Logout
+        </button>
+      </Link>
+    ) : (
+      <Link to="/login">
         <button className="log-button">Login</button>
-      </Link>)
+      </Link>
+    );
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
-      : ""
+      : "";
     return (
       <Container>
         <Router>
@@ -191,15 +201,26 @@ class App extends React.Component {
               </Sticky> */}
               <Switch>
                 <Route
-                  expact path="/register"
-                  render={props => <Register {...props} setToken={this.setToken}
-                  activeUser={this.state.activeUser} />}
+                  expact
+                  path="/register"
+                  render={props => (
+                    <Register
+                      {...props}
+                      setToken={this.setToken}
+                      activeUser={this.state.activeUser}
+                    />
+                  )}
                 />
                 <Route
                   expact
                   path="/login"
-                  render={props => <Login {...props} setToken={this.setToken}
-                  activeUser={this.state.activeUser} />}
+                  render={props => (
+                    <Login
+                      {...props}
+                      setToken={this.setToken}
+                      activeUser={this.state.activeUser}
+                    />
+                  )}
                 />
               </Switch>
             </Grid>
