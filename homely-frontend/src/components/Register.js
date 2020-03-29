@@ -45,7 +45,7 @@ export class Register extends Component {
   render() {
     if(this.props.activeUser) return null;
     return(
-        <div className="container">
+        <div className="login-container">
             <p className="header">Create an account</p>
             <p className="body">We know staying at home can be hard.
                That’s why we want to help you stay productive
