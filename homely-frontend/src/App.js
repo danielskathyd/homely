@@ -157,7 +157,10 @@ class App extends React.Component {
       ? this.state.activeUser.username
       : "";
     let logButton = this.state.activeUser
-      ? <Link to="/"><button onClick={this.handleLogout}>Logout</button></Link>
+      ? (<div>
+        <p>welcome {activeUserName}</p>
+        <Link to="/"><button onClick={this.handleLogout}>Logout</button></Link>
+      </div>)
       : (<Link to="/login"><button>Login</button></Link>)
     return (
       <Container>
@@ -165,7 +168,7 @@ class App extends React.Component {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Header>
-                homely: welcome {activeUserName}
+                homely:
                 <div className="log-button">{logButton}</div>
               </Header>
             </Grid>
