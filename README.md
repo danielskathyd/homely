@@ -1,10 +1,9 @@
 # homely - the productivity and wellness platform
+#### Kathy Daniels, Bryan Wong, Caleb Terrill, Jay Park, Fred Chu
+### [Figma Design](https://www.figma.com/file/LgFWGLVNPVneEaJUmEv9mL/homely?node-id=0%3A1)
 
 ## Organization 
 The backend and frontend source code for this project is organized into the homely-backend and homely-frontend folders respectively. Each contains a README on all the installations necessary to host the Django/React servers locally. Our Django project is contained in homely-backend/backend, in which the homely app can be found as well as our database file db.sqlite3. Images are stored in homely-backend/backend/media/gallery. 
-
-#### Kathy Daniels, Bryan Wong, Caleb Terrill, Jay Park, Fred Chu
-### [Github Repository](https://github.com/danielskathyd/homely) | [Figma Design](https://www.figma.com/file/LgFWGLVNPVneEaJUmEv9mL/homely?node-id=0%3A1)
 
 ## Intro 
 With concerns about COVID-19's exponential growth over the past few months and statewide quarantines taking place, we recognize how difficult it has been for communities to stay connected with each other, maintain health and wellness, and continue on with some semblance of normal life. From student responsibilities and work life to checking in with family and keeping up with friends, it can be easy to become overwhelmed with the drastic changes occurring everyday.
