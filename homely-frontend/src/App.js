@@ -179,6 +179,7 @@ class App extends React.Component {
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
+    let myList = this.state.loggingIn ? null : <MyList></MyList>;
     return (
         <Container>
           <Router>
@@ -186,8 +187,9 @@ class App extends React.Component {
               <Grid item xs={12}>
                 <Header>
                   <div className="logo-text">
-                      <Link to="/" style={{ textDecoration: "none",
-                      color: "#F0E9E4" }}>
+                      <Link to="/"
+                      style={{ textDecoration: "none", color: "#F0E9E4" }}
+                      onClick={() => this.setState({loggingIn: false})}>
                         homely
                         <img src={Logo} className="logo" />
                       </Link>
@@ -203,7 +205,7 @@ class App extends React.Component {
                 </FeedColor>
               </Grid>
               <Grid item xs={4}>
-                <MyList style={{'visibility' : this.state.loggingIn ? 'hidden' : 'visible' }}></MyList>
+                {myList}
                 <Switch>
                   <Route
                     expact
