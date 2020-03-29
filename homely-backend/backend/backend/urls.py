@@ -19,6 +19,9 @@ from rest_framework import routers
 from homely import views
 from knox import views as knox_views
 from homely.api import RegisterAPI, LoginAPI, UserAPI
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'homely')
@@ -31,5 +34,7 @@ urlpatterns = [
     path('api/auth/register', RegisterAPI.as_view()),
     path('api/auth/login', LoginAPI.as_view()),
     path('api/auth/user', UserAPI.as_view()),
-    path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout')
+    path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
