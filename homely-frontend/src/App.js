@@ -10,12 +10,14 @@ import logo from "./logo.svg";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import Todo from "./components/Todo";
+import { Todo } from "./components/Todo";
 import SplitButton from "./components/SplitButton";
 import Feed from "./components/Feed";
-import { Register } from "./components/Accounts/Register";
-import { Login } from "./components/Accounts/Login";
+// import { Register } from "./components/Accounts/Register";
+// import { Login } from "./components/Accounts/Login";
 import { LoginButton } from "./components/LoginButton";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 const Container = styled("div")`
   margin: auto;
@@ -47,16 +49,15 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: null
+      activeUserTodos: []
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
+    this.generateTodoList = this.generateTodoList.bind(this);
+    this.addTodo = this.addTodo.bind(this);
     this.handleLogout = this.handleLogout.bind(this)
   }
-  componentDidMount() {
-    this.fetchUserInfo();
-  }
-  // Right now, you're always me
+
   fetchUserInfo() {
     console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
     axios
@@ -68,12 +69,12 @@ class App extends React.Component {
       })
       .then(res => {
         this.setState({
-        activeUser: res.data
+        activeUser: res.data,
+        activeUserTodos: res.data.todo_set
         })
       })
       .catch(err => console.log(err));
   }
-
   setToken(userToken) {
     this.setState({ activeUserToken: userToken});
     this.fetchUserInfo();
@@ -92,10 +93,52 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: null,
+          activeUserTodos: [],
         })
       })
       .catch(err => console.log(err));
+  }
+
+  generateTodoList() {
+    if(!this.state.activeUserTodos) return;
+    let myData = [];
+    for(let todo of this.state.activeUserTodos) {
+      myData.push({
+        name: todo.title,
+        // completed: todo.completed,
+      });
+    }
+    return myData;
+  }
+
+  addTodo(newData) {
+    let newTodo = {
+      title: newData,
+      completed: false,
+      owner: this.state.activeUser ? this.state.activeUser.id : -1
+    };
+
+    // If user isn't logged in
+    if(!this.state.activeUser) {
+      let myTodos = this.state.activeUserTodos;
+      myTodos.push(newTodo);
+      this.setState({activeUserTodos: myTodos});
+      console.log("User isnt logged in")
+      return true;
+    }
+
+    console.log("You're logged in");
+    axios
+      .post("http://localhost:8000/api/todos/", newTodo)
+      .then(res => {
+        let myTodos = this.state.activeUserTodos;
+        myTodos.push(newTodo);
+        this.setState({activeUserTodos: myTodos});
+        console.log(myTodos);
+        return true;
+      })
+      .catch(err => console.log(err));
+    return false;
   }
 
   renderTodos() {
@@ -107,6 +150,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
+    console.log(this.state.activeUserTodos);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -143,8 +187,11 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={4}>
             <Sticky>
-              <Todo></Todo>
+              <Todo
+                todo_set={this.state.activeUserTodos}
+                addTodo={this.addTodo}></Todo>
             </Sticky>
+            {/* <Login></Login> */}
           </Grid>
         </Grid>
       </Container>
