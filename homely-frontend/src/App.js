@@ -3,10 +3,10 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  Link
 } from "react-router-dom";
 import styled from "styled-components";
-import logo from "./logo.svg";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
@@ -16,16 +16,11 @@ import Feed from "./components/Feed";
 // import { Register } from "./components/Accounts/Register";
 // import { Login } from "./components/Accounts/Login";
 import { LoginButton } from "./components/LoginButton";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import InfoIcon from '@material-ui/icons/Info';
+import { Register } from "./components/Register";
+import { Login } from "./components/Login";
+import MyList from "./components/MyList";
+import Logo from "./images/logo.png";
+
 const Container = styled("div")`
   margin: auto;
   justify-content: center;
@@ -56,45 +51,49 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: [],
-      isFetchingData: false,
-      data: null
+      activeUserTodos: []
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
     this.generateTodoList = this.generateTodoList.bind(this);
     this.addTodo = this.addTodo.bind(this);
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   fetchUserInfo() {
-    console.log("Attemping to fetch user info using: ", `Token ${this.state.activeUserToken}`)
+    console.log(
+      "Attemping to fetch user info using: ",
+      `Token ${this.state.activeUserToken}`
+    );
     axios
       .get("http://localhost:8000/api/auth/user", {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${this.state.activeUserToken}`
+          "Content-Type": "application/json",
+          Authorization: `Token ${this.state.activeUserToken}`
         }
       })
       .then(res => {
         this.setState({
-        activeUser: res.data,
-        activeUserTodos: res.data.todo_set
-        })
+          activeUser: res.data,
+          activeUserTodos: res.data.todo_set
+        });
       })
       .catch(err => console.log(err));
   }
   setToken(userToken) {
-    this.setState({ activeUserToken: userToken});
+    this.setState({ activeUserToken: userToken });
     this.fetchUserInfo();
   }
   handleLogout() {
-    if(!this.state.activeUserToken) return;
-    console.log("Attemping to log out user using: ", `Token ${this.state.activeUserToken}`)
+    if (!this.state.activeUserToken) return;
+    console.log(
+      "Attemping to log out user using: ",
+      `Token ${this.state.activeUserToken}`
+    );
     axios
       .post("http://localhost:8000/api/auth/logout", null, {
         headers: {
-          'Authorization': `Token ${this.state.activeUserToken}`
+          Authorization: `Token ${this.state.activeUserToken}`
         }
       })
       .then(res => {
@@ -102,18 +101,18 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: [],
-        })
+          activeUserTodos: []
+        });
       })
       .catch(err => console.log(err));
   }
 
   generateTodoList() {
-    if(!this.state.activeUserTodos) return;
+    if (!this.state.activeUserTodos) return;
     let myData = [];
-    for(let todo of this.state.activeUserTodos) {
+    for (let todo of this.state.activeUserTodos) {
       myData.push({
-        name: todo.title,
+        name: todo.title
         // completed: todo.completed,
       });
     }
@@ -128,11 +127,11 @@ class App extends React.Component {
     };
 
     // If user isn't logged in
-    if(!this.state.activeUser) {
+    if (!this.state.activeUser) {
       let myTodos = this.state.activeUserTodos;
       myTodos.push(newTodo);
-      this.setState({activeUserTodos: myTodos});
-      console.log("User isnt logged in")
+      this.setState({ activeUserTodos: myTodos });
+      console.log("User isnt logged in");
       return true;
     }
 
@@ -142,26 +141,12 @@ class App extends React.Component {
       .then(res => {
         let myTodos = this.state.activeUserTodos;
         myTodos.push(newTodo);
-        this.setState({activeUserTodos: myTodos});
+        this.setState({ activeUserTodos: myTodos });
         console.log(myTodos);
         return true;
       })
       .catch(err => console.log(err));
     return false;
-  }
-  componentDidMount () {
-    this.setState({ isFetchingData: true });
-    axios
-      .get("http://localhost:8000/api/todos")
-      .then(res => {
-        console.log("hello")
-        this.setState({
-          isFetchingData: false,
-          data: res.data
-        });
-
-      })
-      .catch(err => console.log(err));
   }
 
   renderTodos() {
@@ -173,84 +158,108 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUserTodos);
+    console.log(this.state.activeUser);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
-    
-    if (this.state.isFetchingData) {
-      return <p>Loading data</p>;
-    }
-
-    if (!this.state.data) {
-      return <p>No data</p>;
-    }
-
-    console.log("hello")
-    var tileData = this.state.data
-    return (
-      <Container>
-        <Router>
-          <Switch>
-            <Route
-              expact
-              path="/register"
-              render={props => <Register {...props} setToken={this.setToken} />}
-            />
-            <Route
-              expact
-              path="/login"
-              render={props => <Login {...props} setToken={this.setToken} />}
-            />
-          </Switch>
-          <LoginButton />
-        </Router>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Header>
-              homely: welcome {activeUserName}
-              <button onClick={this.handleLogout}>Logout</button>
-            </Header>
-          </Grid>
-          <Grid item xs={8}>
-            <FeedColor>
-              <SplitButton></SplitButton>
-              <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
-                <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
-                  <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Your Feed</ListSubheader>
-                  </GridListTile>
-                  {tileData.map((tile) => (
-                    <GridListTile key={tile.id}>
-                      <img src={tile.image} alt={tile.title} />
-                      <GridListTileBar
-                        title={tile.title}
-                        subtitle={<span>by: {tile.owner}</span>}
-                        actionIcon={
-                          <IconButton aria-label={`star ${tile.title}`} style = {{color: 'rgba(255, 255, 255, 0.54)'}}>
-                            <StarBorderIcon />
-                          </IconButton>
-                        }
-                        actionPosition="right"
-                      />
-                    </GridListTile>
-                  ))}
-                </GridList>
-              </div>
-            </FeedColor>
-          </Grid>
-          <Grid item xs={4}>
-            <Sticky>
-              <Todo
-                todo_set={this.state.activeUserTodos}
-                addTodo={this.addTodo}></Todo>
-            </Sticky>
-            {/* <Login></Login> */}
-          </Grid>
-        </Grid>
-      </Container>
+    let logButton = this.state.activeUser ? (
+      <Link to="/">
+        <button className="log-button" onClick={this.handleLogout}>
+          Logout
+        </button>
+      </Link>
+    ) : (
+      <Link to="/login">
+        <button className="log-button">Login</button>
+      </Link>
     );
+    let userGreeting = this.state.activeUser
+      ? "welcome " + activeUserName + "!"
+      : "";
+    if (!this.state.activeUser) {
+      return (
+        <Container>
+          <Router>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Header>
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <div className="logo-text">
+                      homely
+                      <img src={Logo} className="logo" />
+                    </div>
+                    {logButton}
+                    <div className="user-greeting">{userGreeting}</div>
+                  </Link>
+                </Header>
+              </Grid>
+              <Grid item xs={8}>
+                <FeedColor>
+                  <SplitButton></SplitButton>
+                  <Feed></Feed>
+                </FeedColor>
+              </Grid>
+              <Grid item xs={4}>
+                <Switch>
+                  <Route
+                    expact
+                    path="/register"
+                    render={props => (
+                      <Register
+                        {...props}
+                        setToken={this.setToken}
+                        activeUser={this.state.activeUser}
+                      />
+                    )}
+                  />
+                  <Route
+                    expact
+                    path="/login"
+                    render={props => (
+                      <Login
+                        {...props}
+                        setToken={this.setToken}
+                        activeUser={this.state.activeUser}
+                      />
+                    )}
+                  />
+                </Switch>
+              </Grid>
+            </Grid>
+          </Router>
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <Router>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Header>
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <div className="logo-text">
+                      homely
+                      <img src={Logo} className="logo" />
+                    </div>
+                    {logButton}
+                    <div className="user-greeting">{userGreeting}</div>
+                  </Link>
+                </Header>
+              </Grid>
+              <Grid item xs={8}>
+                <FeedColor>
+                  <SplitButton></SplitButton>
+                  <Feed></Feed>
+                </FeedColor>
+              </Grid>
+              <Grid item xs={4}>
+                <MyList></MyList>
+              </Grid>
+            </Grid>
+          </Router>
+        </Container>
+      );
+    }
   }
 }
 

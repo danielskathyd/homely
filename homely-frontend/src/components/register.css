@@ -1,4 +1,4 @@
-.container {
+.login-container {
     background-color: #EDCADB;
     font-family: "Quando", serif;
     padding: 10px 40px 40px 40px;
@@ -7,8 +7,8 @@
     color: #3E3D3B;
 }
 
-.header {
-    font-size: 20px;
+.log-header {
+  font-size: 24px;
 }
 
 .body {
@@ -19,7 +19,7 @@ form {
     padding: 10px 0px;
 }
 
-input {
+.login-input {
     border-radius: 20px;
     border: none;
     opacity: 75%;
@@ -31,6 +31,16 @@ label {
     font-size: 12px;
 }
 
+.row {
+    white-space: nowrap;
+    margin-bottom: -18px;
+}
+
+.row > label, .row > p {
+    display: inline-block;
+    margin: 0px 10px 0px 0px;
+}
+
 .styled-button {
     background-color: #3B55DE;
     font-family: "Quando", serif;
@@ -40,16 +50,29 @@ label {
     padding: 7px 10px;
     margin: 10px 0px;
     box-shadow: 0 5px #28357B;
+    cursor: pointer;
 }
 
 .styled-button:active {
     box-shadow: 0 1px #666;
     transform: translateY(4px);
+    cursor: pointer;
   }
 
-.forgot-password {
+.forgot-this.state.inputsd {
     margin: 0px;
     font-size: 10px;
     color: #3B55DE;
     text-decoration: underline;
+}
+
+.error {
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+    color: #FFFFFF;
+}
+
+.register-button {
+    margin-top: -30px;
 }
