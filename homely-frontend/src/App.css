@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -39,6 +43,8 @@
     margin: 10px 0px;
     box-shadow: 0 5px #E5A1C2;
     cursor: pointer;
+    display: inline-block;
+    float: right;
 }
 
 .log-button:active {
@@ -47,9 +53,12 @@
     cursor: pointer;
 }
 
-.log-button {
-  display: inline-block;
-  float: right;
+.log-button:hover {
+    animation: pulse 2s ease;
+}
+
+.log-button:focus {
+  outline: 0;
 }
 
 .user-greeting {

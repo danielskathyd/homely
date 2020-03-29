@@ -158,6 +158,7 @@ class App extends React.Component {
           <li key={i} onClick={() => {this.toggleComplete(i)}} className={className}>
             {title}<div onClick={(e) => {
               this.deleteTodo(i);
+              e.stopPropagation();
             }} className="close">X</div>
           </li>
 
