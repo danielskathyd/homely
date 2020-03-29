@@ -12,13 +12,13 @@ export default function Register() {
                exchange ideas on how we can tackle self isolation together.</p>
             <form>
                 <label>Email</label><br></br>
-                <input size="50" type="text" placeholder="johnnyappleseed@gmail.com"></input><br></br>
+                <input className="login-input" size="50" type="text" placeholder="johnnyappleseed@gmail.com"></input><br></br>
                 <label>Username</label><br></br>
-                <input size="50" type="text" placeholder="johnnyappleseed"></input><br></br>
+                <input className="login-input" size="50" type="text" placeholder="johnnyappleseed"></input><br></br>
                 <label>Password</label><br></br>
-                <input size="50" type="text" placeholder="••••••••••••"></input><br></br>
+                <input className="login-input" size="50" type="text" placeholder="••••••••••••"></input><br></br>
                 <label>Verify Password</label><br></br>
-                <input size="50" type="text" placeholder="••••••••••••"></input>
+                <input className="login-input" size="50" type="text" placeholder="••••••••••••"></input>
             </form>
             <button class="styled-button">Connect</button>
         </div>
