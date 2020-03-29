@@ -6,11 +6,11 @@ export class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [{ title: "Name", field: "name" }],
+      columns: [{ title: "Name", field: "title" }],
       data: [
-        { name: "40 pushups" },
-        { name: "2 leetcode hards" },
-        { name: "call my bestfriend Fred" }
+        { title: "40 pushups" },
+        { title: "2 leetcode hards" },
+        { title: "call my bestfriend Fred" }
       ]
     }
   }
@@ -35,8 +35,10 @@ export class Todo extends React.Component {
           search: false
         }}
         editable={{
-          onRowAdd: newData =>
+          onRowAdd: newData => {
             new Promise(resolve => {
+              console.log("onRowAdd");
+              if(!this.props.addTodo(newData)) return;
               setTimeout(() => {
                 resolve();
                 this.setState(prevState => {
@@ -45,7 +47,8 @@ export class Todo extends React.Component {
                   return { ...prevState, data };
                 });
               }, 600);
-            }),
+            })
+          },
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
               setTimeout(() => {

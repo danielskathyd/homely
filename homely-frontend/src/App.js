@@ -47,11 +47,12 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: null
+      activeUserTodos: []
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
     this.generateTodoList = this.generateTodoList.bind(this);
+    this.addTodo = this.addTodo.bind(this);
     this.handleLogout = this.handleLogout.bind(this)
   }
 
@@ -90,7 +91,7 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: null,
+          activeUserTodos: [],
         })
       })
       .catch(err => console.log(err));
@@ -106,6 +107,36 @@ class App extends React.Component {
       });
     }
     return myData;
+  }
+
+  addTodo(newData) {
+    let newTodo = {
+      title: newData,
+      completed: false,
+      owner: this.state.activeUser ? this.state.activeUser.id : -1
+    };
+
+    // If user isn't logged in
+    if(!this.state.activeUser) {
+      let myTodos = this.state.activeUserTodos;
+      myTodos.push(newTodo);
+      this.setState({activeUserTodos: myTodos});
+      console.log("User isnt logged in")
+      return true;
+    }
+
+    console.log("You're logged in");
+    axios
+      .post("http://localhost:8000/api/todos/", newTodo)
+      .then(res => {
+        let myTodos = this.state.activeUserTodos;
+        myTodos.push(newTodo);
+        this.setState({activeUserTodos: myTodos});
+        console.log(myTodos);
+        return true;
+      })
+      .catch(err => console.log(err));
+    return false;
   }
 
   renderTodos() {
@@ -154,7 +185,9 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={4}>
             <Sticky>
-              <Todo todo_set={this.generateTodoList()}></Todo>
+              <Todo
+                todo_set={this.state.activeUserTodos}
+                addTodo={this.addTodo}></Todo>
             </Sticky>
           </Grid>
         </Grid>
