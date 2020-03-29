@@ -154,6 +154,15 @@ class App extends React.Component {
     if (this.state.activeUserTodos.length <= i) return;
     let myTodos = this.state.activeUserTodos;
     myTodos[i].completed = !myTodos[i].completed;
+
+    // not logged in
+    if(!this.state.activeUser) {
+      this.setState({
+        activeUserTodos: myTodos
+      })
+      this.generateTodoList();
+      return;
+    }
     console.log("attempting request on", myTodos[i].id, "with", myTodos[i]);
     axios
       .put(`http://localhost:8000/api/todos/${myTodos[i].id}/`, myTodos[i], {
@@ -183,8 +192,9 @@ class App extends React.Component {
       let myTodos = this.state.activeUserTodos;
       myTodos.push(newTodo);
       this.setState({ activeUserTodos: myTodos });
+      this.generateTodoList();
       console.log("User isnt logged in");
-      return true;
+      return;
     }
 
     console.log("You're logged in");
@@ -230,7 +240,7 @@ class App extends React.Component {
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
-    let myList = this.state.loggingIn ? null : <MyList todos={this.state.todoList}></MyList>;
+    let myList = this.state.loggingIn ? null : <MyList todos={this.state.todoList} onSubmit={this.addTodo}></MyList>;
     return (
         <Container>
           <Router>
