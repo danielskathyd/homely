@@ -51,7 +51,8 @@ class App extends React.Component {
     this.state = {
       activeUserToken: null,
       activeUser: null,
-      activeUserTodos: []
+      activeUserTodos: [],
+      loggingIn: false
     };
     this.setToken = this.setToken.bind(this);
     this.fetchUserInfo = this.fetchUserInfo.bind(this);
@@ -81,7 +82,7 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
   setToken(userToken) {
-    this.setState({ activeUserToken: userToken });
+    this.setState({ activeUserToken: userToken, loggingIn: false });
     this.fetchUserInfo();
   }
   handleLogout() {
@@ -101,7 +102,7 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: []
+          activeUserTodos: [],
         });
       })
       .catch(err => console.log(err));
@@ -158,7 +159,7 @@ class App extends React.Component {
     return todoList;
   }
   render() {
-    console.log(this.state.activeUser);
+    console.log(this.state.loggingIn);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -170,7 +171,7 @@ class App extends React.Component {
       </Link>
     ) : (
       <Link to="/login">
-        <button className="log-button">Login</button>
+        <button className="log-button" onClick={()=>this.setState({loggingIn: true})}>Login</button>
       </Link>
     );
     let userGreeting = this.state.activeUser
@@ -191,8 +192,6 @@ class App extends React.Component {
                       {logButton}
                       <div className="user-greeting">{userGreeting}</div>
                   </div>
-
-
                 </Header>
               </Grid>
               <Grid item xs={8}>
@@ -202,6 +201,7 @@ class App extends React.Component {
                 </FeedColor>
               </Grid>
               <Grid item xs={4}>
+                <MyList style={{'visibility' : this.state.loggingIn ? 'hidden' : 'visible' }}></MyList>
                 <Switch>
                   <Route
                     expact
@@ -271,7 +271,6 @@ class App extends React.Component {
                 todo_set={this.state.activeUserTodos}
                 addTodo={this.addTodo}></Todo>
             </Sticky> */}
-            <MyList></MyList>
           </Grid>
         </Router>
       </Container>
