@@ -18,7 +18,7 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
-import MyList from "./components/MyList";
+import { MyList } from "./components/MyList";
 import Logo from "./images/logo.png";
 
 const Container = styled("div")`
@@ -179,7 +179,7 @@ class App extends React.Component {
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
-    let myList = this.state.loggingIn ? null : <MyList></MyList>;
+    let myList = this.state.loggingIn ? null : <MyList todos={this.state.activeUserTodos}></MyList>;
     return (
         <Container>
           <Router>
@@ -233,48 +233,6 @@ class App extends React.Component {
               </Grid>
             </Grid>
             <Grid item xs={4}>
-              {/* <Sticky>
-                <Todo
-                  todo_set={this.state.activeUserTodos}
-                  addTodo={this.addTodo}></Todo>
-              </Sticky> */}
-              <Switch>
-                <Route
-                  expact
-                  path="/register"
-                  render={props => (
-                    <Register
-                      {...props}
-                      setToken={this.setToken}
-                      activeUser={this.state.activeUser}
-                    />
-                  )}
-                />
-                <Route
-                  expact path="/login"
-                  render={props => (
-                  <Login
-                    {...props}
-                    setToken={this.setToken}
-                    activeUser={this.state.activeUser}
-                  />
-                )}
-              />
-            </Switch>
-          </Grid>
-
-          <Grid item xs={8}>
-            <FeedColor>
-              <SplitButton></SplitButton>
-              <Feed></Feed>
-            </FeedColor>
-          </Grid>
-          <Grid item xs={4}>
-            {/* <Sticky>
-              <Todo
-                todo_set={this.state.activeUserTodos}
-                addTodo={this.addTodo}></Todo>
-            </Sticky> */}
           </Grid>
         </Router>
       </Container>
