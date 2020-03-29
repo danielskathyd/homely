@@ -120,7 +120,8 @@ class App extends React.Component {
       })
       .then(res => {
         this.setState({
-          activeUserTodos: res.data.ptodo_set
+          activeUserTodos: res.data.ptodo_set,
+          activeUser: res.data
         });
         this.generateTodoList();
       })
