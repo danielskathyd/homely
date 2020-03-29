@@ -18,15 +18,15 @@ import Feed from "./components/Feed";
 import { LoginButton } from "./components/LoginButton";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
-import { MyList }   from "./components/MyList";
+import { MyList } from "./components/MyList";
 import Logo from "./images/logo.png";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import InfoIcon from '@material-ui/icons/Info';
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import IconButton from "@material-ui/core/IconButton";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import InfoIcon from "@material-ui/icons/Info";
 import ModalImage from "react-modal-image";
 
 const Container = styled("div")`
@@ -44,7 +44,7 @@ const Header = styled("div")`
 `;
 
 const FeedColor = styled("div")`
-  background: #EDCADB;
+  background: #edcadb;
   padding: 40px;
   margin: 0px 40px 0px 70px;
 `;
@@ -114,7 +114,7 @@ class App extends React.Component {
         this.setState({
           activeUserToken: null,
           activeUser: null,
-          activeUserTodos: [],
+          activeUserTodos: []
         });
       })
       .catch(err => console.log(err));
@@ -161,20 +161,19 @@ class App extends React.Component {
       .catch(err => console.log(err));
     return false;
   }
-  componentDidMount () {
-      this.setState({ isFetchingData: true });
-      axios
-        .get("http://localhost:8000/api/todos")
-        .then(res => {
-          console.log("hello")
-          this.setState({
-            isFetchingData: false,
-            data: res.data
-          });
-
-        })
-        .catch(err => console.log(err));
-    }
+  componentDidMount() {
+    this.setState({ isFetchingData: true });
+    axios
+      .get("http://localhost:8000/api/todos")
+      .then(res => {
+        console.log("hello");
+        this.setState({
+          isFetchingData: false,
+          data: res.data
+        });
+      })
+      .catch(err => console.log(err));
+  }
   renderTodos() {
     if (!this.state.activeUserTodos) return;
     let todoList = [];
@@ -196,95 +195,122 @@ class App extends React.Component {
       </Link>
     ) : (
       <Link to="/login">
-        <button className="log-button" onClick={()=>this.setState({loggingIn: true})}>Login</button>
+        <button
+          className="log-button"
+          onClick={() => this.setState({ loggingIn: true })}
+        >
+          Login
+        </button>
       </Link>
     );
     let userGreeting = this.state.activeUser
       ? "welcome " + activeUserName + "!"
       : "";
-    let myList = this.state.loggingIn ? null : <MyList todos={this.state.activeUserTodos}></MyList>;
+    let myList = this.state.loggingIn ? null : (
+      <MyList todos={this.state.activeUserTodos}></MyList>
+    );
 
     if (this.state.isFetchingData || !this.state.data) {
       return <p></p>;
     }
 
-    let tileData = this.state.data
+    let tileData = this.state.data;
     return (
-        <Container>
-          <Router>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Header>
-                  <div className="logo-text">
-                      <Link to="/"
-                      style={{ textDecoration: "none", color: "#F0E9E4" }}
-                      onClick={() => this.setState({loggingIn: false})}>
-                        homely
-                        <img src={Logo} className="logo" />
-                      </Link>
-                      {logButton}
-                      <div className="user-greeting">{userGreeting}</div>
-                  </div>
-                </Header>
-              </Grid>
-              <Grid item xs={8}>
-                <FeedColor>
-                  <SplitButton></SplitButton>
-                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
-                      <GridList cellHeight={180} spacing={15} style = {{width: 1000, height: 580, transform: 'translateZ(0)'}}>
-                        {tileData.map(tile => (
-                          <GridListTile key={tile.id}>
-                            <ModalImage small={tile.image} large={tile.image} alt={tile.title} />
-                            {/* <img src={tile.image} alt={tile.title} /> */}
-                            <GridListTileBar
-                              title={tile.title}
-                              subtitle={<span>by: {tile.owner}</span>}
-                              actionIcon={
-                                <IconButton
-                                  aria-label={`star ${tile.title}`}
-                                  style = {{color: 'rgba(255, 255, 255, 0.54)'}}
-                                >
-                                  <StarBorderIcon />
-                                </IconButton>
-                              }
-                              actionPosition="right"
-                            />
-                          </GridListTile>
-                        ))}
-                      </GridList>
-                    </div>
-                </FeedColor>
-              </Grid>
-              <Grid item xs={4}>
-                {myList}
-                <Switch>
-                  <Route
-                    expact
-                    path="/register"
-                    render={props => (
-                      <Register
-                        {...props}
-                        setToken={this.setToken}
-                        activeUser={this.state.activeUser}
-                      />
-                    )}
-                  />
-                  <Route
-                    expact
-                    path="/login"
-                    render={props => (
-                      <Login
-                        {...props}
-                        setToken={this.setToken}
-                        activeUser={this.state.activeUser}
-                      />
-                    )}
-                  />
-                </Switch>
-              </Grid>
+      <Container>
+        <Router>
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <Header>
+                <div className="logo-text">
+                  <Link
+                    to="/"
+                    style={{ textDecoration: "none", color: "#F0E9E4" }}
+                    onClick={() => this.setState({ loggingIn: false })}
+                  >
+                    homely
+                    <img src={Logo} className="logo" />
+                  </Link>
+                  {logButton}
+                  <div className="user-greeting">{userGreeting}</div>
+                </div>
+              </Header>
+            </Grid>
+            <Grid item xs={8}>
+              <FeedColor>
+                <SplitButton></SplitButton>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "space-around",
+                    overflow: "hidden"
+                  }}
+                >
+                  <GridList
+                    cellHeight={180}
+                    spacing={15}
+                    style={{
+                      width: 1000,
+                      height: 580,
+                      transform: "translateZ(0)"
+                    }}
+                  >
+                    {tileData.map(tile => (
+                      <GridListTile key={tile.id}>
+                        <ModalImage
+                          small={tile.image}
+                          large={tile.image}
+                          alt={tile.title}
+                        />
+                        {/* <img src={tile.image} alt={tile.title} /> */}
+                        <GridListTileBar
+                          title={tile.title}
+                          subtitle={<span>by: {tile.owner}</span>}
+                          actionIcon={
+                            <IconButton
+                              aria-label={`star ${tile.title}`}
+                              style={{ color: "rgba(255, 255, 255, 0.54)" }}
+                            >
+                              <StarBorderIcon />
+                            </IconButton>
+                          }
+                          actionPosition="right"
+                        />
+                      </GridListTile>
+                    ))}
+                  </GridList>
+                </div>
+              </FeedColor>
             </Grid>
             <Grid item xs={4}>
+              {myList}
+              <Switch>
+                <Route
+                  expact
+                  path="/register"
+                  render={props => (
+                    <Register
+                      {...props}
+                      setToken={this.setToken}
+                      activeUser={this.state.activeUser}
+                    />
+                  )}
+                />
+                <Route
+                  expact
+                  path="/login"
+                  render={props => (
+                    <Login
+                      {...props}
+                      setToken={this.setToken}
+                      activeUser={this.state.activeUser}
+                    />
+                  )}
+                />
+              </Switch>
+            </Grid>
           </Grid>
+          <Grid item xs={4}></Grid>
         </Router>
       </Container>
     );
