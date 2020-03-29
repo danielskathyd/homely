@@ -1,0 +1,48 @@
+.container {
+    background-color: #EDCADB;
+    font-family: "Quando", serif;
+    padding: 10px 40px 40px 40px;
+    text-align: left;
+    border-radius: 20px 0px 0px 20px;
+    color: #3E3D3B;
+}
+
+.header {
+    font-size: 20px;
+}
+
+.body {
+    font-size: 12px;
+}
+
+form {
+    padding: 10px 0px;
+}
+
+input {
+    border-radius: 20px;
+    border: none;
+    opacity: 75%;
+    padding: 7px 10px;
+    margin: 5px 0px 10px 0px;
+}
+
+label {
+    font-size: 12px;
+}
+
+button {
+    background-color: #3B55DE;
+    font-family: "Quando", serif;
+    border-radius: 10px;
+    color: #FEFDFD;
+    border: none;
+    padding: 7px 10px;
+    margin: 0px 0px;
+    box-shadow: 0 5px #28357B;
+}
+
+button:active {
+    box-shadow: 0 1px #666;
+    transform: translateY(4px);
+  }
