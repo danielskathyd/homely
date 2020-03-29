@@ -213,8 +213,7 @@ class App extends React.Component {
                   )}
                 />
                 <Route
-                  expact
-                  path="/login"
+                  expact path="/login"
                   render={props => (
                     <Login
                       {...props}
@@ -238,7 +237,6 @@ class App extends React.Component {
                 todo_set={this.state.activeUserTodos}
                 addTodo={this.addTodo}></Todo>
             </Sticky> */}
-            {/* <Login></Login> */}
             <MyList></MyList>
           </Grid>
         </Router>
