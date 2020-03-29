@@ -43,6 +43,7 @@ Run the following command to install django:
 
 ```
 pipenv install django
+pipenv install pillow
 ```
 
 Install djangorestframework and django-cors-headers:
