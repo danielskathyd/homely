@@ -78,8 +78,6 @@ npm install reactstrap -- remove later
 
 npm install axios
 
-npm install redux
-
 npm install react-router-dom
 
 yarn add @emotion/core
