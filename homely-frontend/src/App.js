@@ -170,6 +170,7 @@ class App extends React.Component {
 
     // not logged in
     if(!this.state.activeUser) {
+      console.log("Not logged in");
       this.setState({
         activeUserTodos: myTodos
       })
@@ -182,7 +183,7 @@ class App extends React.Component {
       {
   	      "title": myTodos[i].title,
   	      "description": myTodos[i].description,
-  	      "completed": !myTodos[i].completed,
+  	      "completed": myTodos[i].completed,
       }, {
         headers: {
           "Content-Type": "application/json"
