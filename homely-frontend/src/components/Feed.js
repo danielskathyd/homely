@@ -48,7 +48,7 @@ const TitlebarGridList = props => {
               <ModalImage
                 small={props.data[index].image}
                 large={props.data[index].image}
-                alt={props.data[index].title}
+                alt={props.data[index].description}
               />
             </Fade>
             <GridListTileBar
