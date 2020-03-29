@@ -23,3 +23,54 @@ For developing frontend, we started out by using a module called material-ui whi
 
 ## Improvements
 The next step of this project would be a live deployment of the application using Heroku or AWS. It is currently just hosted on a local server, as shown in the demonstration video. We would also touch up the front end so that the post feed is more smooth and more closely resembles the Figma mockup. 
+
+## Build Instructions
+If you'd like to try homely yourself, here are the steps to build it:
+
+# Backend
+Navigate to `homely-backend/backend` as it contains `manage.py`, the script used to run our local Django server. Make sure pipenv and python3 are installed:
+
+```
+brew install pipenv
+pip install --user pipenv
+```
+
+Install the following packages with pipenv:
+
+```
+pipenv install djangorestframework django-cors-headers
+
+pipenv install django-rest-knox
+
+pipenv install Pillow
+```
+
+Now we can run the server in the pipenv environment as follows:
+
+```
+pipenv shell
+cd backend
+python manage.py runserver
+```
+
+Here's a list of URLs/routes you can use:
+* User APIs: http://localhost:8000/api/users
+* Personal (private) Todo APIs: http://localhost:8000/api/ptodos
+* Public Todo APIs: http://localhost:8000/api/todos
+
+The following two URLs use `knox` and return a session Token on successful authentication:
+* User Register: http://localhost:8000/api/register
+* User Login: http://localhost:8000/api/auth/login
+
+That token can be used to get that User's data:
+* User data by Token: http://localhost:8000/api/auth/user
+Make sure to include the header for this URL:
+```
+Header:
+{
+  "Authorization" : "Token <INSERT TOKEN HERE>"
+}
+```
+And lastly:
+* Logout: http://localhost:8000/api/auth/logout
+(This invalidates the token)
