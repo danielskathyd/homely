@@ -7,8 +7,8 @@
     color: #3E3D3B;
 }
 
-.header {
-    font-size: 20px;
+.log-header {
+  font-size: 24px;
 }
 
 .body {
@@ -59,13 +59,20 @@ label {
     cursor: pointer;
   }
 
-.forgot-password {
+.forgot-this.state.inputsd {
     margin: 0px;
     font-size: 10px;
     color: #3B55DE;
     text-decoration: underline;
 }
 
-.password-match-error {
-  color: red;
+.error {
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+    color: #FFFFFF;
+}
+
+.register-button {
+    margin-top: -30px;
 }

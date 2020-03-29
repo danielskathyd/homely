@@ -16,6 +16,7 @@ export class Register extends Component {
         password2: ''
       },
       passwordError: false,
+      registerError: false,
     }
   }
 
@@ -33,7 +34,10 @@ export class Register extends Component {
         this.setState({ hidden: true });
         this.props.setToken(userToken);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err)
+        this.setState({ registerError: true });
+      });
   }
 
   onChange = e => {
@@ -43,10 +47,11 @@ export class Register extends Component {
   }
 
   render() {
+    let errorText = this.state.registerError ? "Error: invalid input!" : "";
     if(this.props.activeUser) return null;
     return(
         <div className="login-container">
-            <p className="header">Create an account</p>
+            <p className="log-header">Create an account</p>
             <p className="body">We know staying at home can be hard.
                That’s why we want to help you stay productive
                and share your successes with those around you. </p>
@@ -67,14 +72,17 @@ export class Register extends Component {
                   onChange={this.onChange} value={this.state.inputs.password}></input><br></br>
                 <div className="row">
                   <label>Verify Password</label>
-                  <label className="password-match-error" style={{
+                  <label className="error" style={{
                     'visibility': (this.state.passwordError ? 'visible' : 'hidden')
                   }}>Your passwords do not match!</label>
                 </div><br></br>
                 <input size="50" type="password" name="password2" className="login-input"
                   placeholder="••••••••••••"
                   onChange={this.onChange} value={this.state.inputs.password2}></input><br></br>
-                <button class="styled-button">Connect</button>
+                <div className="row">
+                  <button class="styled-button">Connect</button>
+                  <div className="error body">{errorText}</div>
+                </div>
             </form>
         </div>
     );
