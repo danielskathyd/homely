@@ -98,7 +98,6 @@ class App extends React.Component {
     axios
       .get("http://localhost:8000/api/todos")
       .then(res => {
-        console.log("hello");
         this.setState({
           isFetchingData: false,
           data: res.data.reverse()
@@ -156,17 +155,12 @@ class App extends React.Component {
   }
 
   handleUploadButton(e, i) {
-    console.log(this.state.activeUserTodos);
     let todo = this.state.activeUserTodos[i];
-    console.log("SHARED TODO NAME");
-    console.log(todo.title);
     document.getElementById(i).className += " exit-left";
-    setTimeout(() => {
-      this.deleteTodo(i);
-      this.setState({
-        sharedTodoTitle: todo.title
-      });
-    }, 2000);
+    this.setState({
+      sharedTodoTitle: todo.title
+    });
+    this.deleteTodo(i);
   }
 
 
@@ -296,7 +290,7 @@ class App extends React.Component {
   }
 
   uploadTodo(state) {
-    console.log(state);
+    debugger;
     let myCategory;
     switch(state.selectedCategory) {
       case 1:
@@ -314,6 +308,8 @@ class App extends React.Component {
       case 5:
         myCategory = "hobby";
         break;
+      default:
+        myCategory = "other";
     }
     let myTodo = state.inputs;
     let myPublicTodo = {
@@ -340,7 +336,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.activeUser);
     let activeUserName = this.state.activeUser
       ? this.state.activeUser.username
       : "";
@@ -376,11 +371,8 @@ class App extends React.Component {
     }
 
     let tileData = this.state.data;
-    console.log(this.state.sharedTodoTitle);
     let upload = this.state.sharedTodoTitle
-      ? <Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/> : null;
-    console.log("UPLOAD STATE:", upload)
-    console.log(tileData);
+      ? (<div className="fade-in"><Upload onSubmit={(state) => this.uploadTodo(state)} title={this.state.sharedTodoTitle}/></div>) : null;
     return (
       <Container>
         <Router>

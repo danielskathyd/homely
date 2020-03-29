@@ -207,6 +207,12 @@
   top: 30vh;
 }
 
+.fade-in {
+  animation: fadein 2s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
 .login-input {
   width: 60%;
 }
@@ -251,4 +257,14 @@
   to {
     color: #E5A1C2;
   }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

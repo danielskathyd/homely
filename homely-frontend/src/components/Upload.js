@@ -36,19 +36,10 @@ export class Upload extends Component {
     });
   }
 
-  fileSelectedHandler(e) {
-    this.setState({
-      image: e.target.files[0]
-    });
-  }
-
   onChange(e) {
     let myInputs = this.state.inputs;
     myInputs[e.target.name] = e.target.value;
     this.setState({ inputs: myInputs });
-  }
-
-  fileUploadHandler() {
   }
 
   onSubmit() {
@@ -77,7 +68,7 @@ export class Upload extends Component {
                 <input size="50" type="text" name="title" className="login-input"
                   onChange={this.onChange} defaultValue={this.props.title}></input><br></br>
                 <label>Picture/Video</label><br></br>
-                <input type="file" onChange={this.fileSelectedHandler} name="image"
+                <input type="file" name="image"
                   className="upload-btn styled-button"/><br></br>
                 <label>Description</label><br></br>
                 <textarea rows="2" cols="25" size="200" type="text" name="description"
