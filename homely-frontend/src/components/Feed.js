@@ -41,7 +41,6 @@ export default function TitlebarGridList() {
         {tileData.map(tile => (
           <GridListTile key={tile.img}>
             <ModalImage small={tile.img} large={tile.img} alt={tile.title} />
-            {/* <img src={tile.img} alt={tile.title} /> */}
             <GridListTileBar
               title={tile.title}
               subtitle={<span>by: {tile.author}</span>}
