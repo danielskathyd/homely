@@ -1,4 +1,5 @@
 # homely - the productivity and wellness platform
+# [Check out the website!](https://bryanjwong.github.io/homely-website/?#/)
 #### Kathy Daniels, Bryan Wong, Caleb Terrill, Jay Park, Fred Chu
 ### [Figma Design](https://www.figma.com/file/LgFWGLVNPVneEaJUmEv9mL/homely?node-id=0%3A1)|[Devpost](https://devpost.com/software/homely-15mlc4)|[Video Demo](https://www.youtube.com/watch?v=4wbE_BZI1kU)
 
